@@ -2,19 +2,27 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:model="clr-namespace:de.inc47.AchievementPlanner.Model;assembly=de.inc47.AchievementPlanner.Model"
+        xmlns:converter="clr-namespace:AchievementPlanner.Converter"
         Title="MainWindow" Height="960" Width="1366">
   <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+    <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
     <DataTemplate DataType="{x:Type model:Game}">
       <TextBlock Text="{Binding Name}"></TextBlock>
     </DataTemplate>
   </Window.Resources>
   <Grid>
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation ="Vertical" Visibility="{Binding Initialized, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+      <TextBlock Text="Enter your Steam ID:"></TextBlock>
+      <TextBox Text="{Binding SteamId}"></TextBox>
+      <Button Content="Load Profile" Click="ButtonBase_OnClick"></Button>
+      <TextBox Name="LogTextBox" Height="400" Width="800" VerticalScrollBarVisibility="Visible" Text="{Binding Status}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+    </StackPanel>
+    <StackPanel Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="Steam ID"></TextBlock>
         <TextBox Text="{Binding SteamId}" Width="150" ></TextBox>
       </StackPanel>
-      <TextBlock Text="{Binding Status}" Background="CadetBlue"></TextBlock>
       <StackPanel Orientation="Horizontal">
         <Image Width="128" Height="128" Source="{Binding User.AvatarUrl}"></Image>
         <TextBlock Width="400" Height="128" Text="{Binding User.Name}" FontSize="32"></TextBlock>
