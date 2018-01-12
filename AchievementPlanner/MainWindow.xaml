@@ -20,16 +20,10 @@
     </StackPanel>
     <StackPanel Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
       <StackPanel Orientation="Horizontal">
-        <TextBlock Text="Steam ID"></TextBlock>
-        <TextBox Text="{Binding SteamId}" Width="150" ></TextBox>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
         <Image Width="128" Height="128" Source="{Binding User.AvatarUrl}"></Image>
         <TextBlock Width="400" Height="128" Text="{Binding User.Name}" FontSize="32"></TextBlock>
       </StackPanel>
-      <ListView ItemsSource="{Binding Games}">
-
-      </ListView>
+      <ListView Height="600" ItemsSource="{Binding Games}" />
     </StackPanel>
   </Grid>
 </Window>
