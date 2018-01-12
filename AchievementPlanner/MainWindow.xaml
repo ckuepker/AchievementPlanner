@@ -9,8 +9,19 @@
     </DataTemplate>
   </Window.Resources>
   <Grid>
-    <ListView ItemsSource="{Binding Games}">
+    <StackPanel Orientation="Vertical">
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="Steam ID"></TextBlock>
+        <TextBox Text="{Binding SteamId}" Width="150" ></TextBox>
+      </StackPanel>
+      <TextBlock Text="{Binding Status}" Background="CadetBlue"></TextBlock>
+      <StackPanel Orientation="Horizontal">
+        <Image Width="128" Height="128" Source="{Binding User.AvatarUrl}"></Image>
+        <TextBlock Width="400" Height="128" Text="{Binding User.Name}" FontSize="32"></TextBlock>
+      </StackPanel>
+      <ListView ItemsSource="{Binding Games}">
 
-    </ListView>
+      </ListView>
+    </StackPanel>
   </Grid>
 </Window>

@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.inc47.SteamWebAPI", "de.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.inc47.AchievementPlanner.ViewModel", "de.inc47.AchievementPlanner.ViewModel\de.inc47.AchievementPlanner.ViewModel.csproj", "{259FCD14-628E-4B30-A86F-907B3029FD09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.inc47.AchievementPlanner.ConfigurationTest", "de.inc47.AchievementPlanner.ConfigurationTest\de.inc47.AchievementPlanner.ConfigurationTest.csproj", "{9435E0B1-B1F4-4379-8827-6FD97A1BD1E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.inc47.AchievementPlanner.ModelTest", "de.inc47.AchievementPlanner.ModelTest\de.inc47.AchievementPlanner.ModelTest.csproj", "{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,12 +51,22 @@ Global
 		{259FCD14-628E-4B30-A86F-907B3029FD09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{259FCD14-628E-4B30-A86F-907B3029FD09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{259FCD14-628E-4B30-A86F-907B3029FD09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9435E0B1-B1F4-4379-8827-6FD97A1BD1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9435E0B1-B1F4-4379-8827-6FD97A1BD1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9435E0B1-B1F4-4379-8827-6FD97A1BD1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9435E0B1-B1F4-4379-8827-6FD97A1BD1E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C96F9D99-B763-433D-A019-5B4E9AF95DE3} = {001016EC-5EE8-4037-A422-81254312EBB8}
+		{9435E0B1-B1F4-4379-8827-6FD97A1BD1E8} = {001016EC-5EE8-4037-A422-81254312EBB8}
+		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F} = {001016EC-5EE8-4037-A422-81254312EBB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAA6BB24-41C2-44F0-9FA4-95B6711429F1}

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using de.inc47.AchievementPlanner.Configuration;
 using de.inc47.AchievementPlanner.Model;
 using Steam.Models;
@@ -21,11 +19,20 @@ namespace de.inc47.SteamWebAPI
 
     public HashSet<IAchievement> GetAchievements(uint appId)
     {
+      if (appId == 240 || appId == 730 || appId == 221910 || appId == 630)
+      {
+        return new HashSet<IAchievement>();
+      }
       var i = new SteamUserStats(_apiKey);
       //var task = i.GetGlobalAchievementPercentagesForAppAsync(appId);
       var task = i.GetSchemaForGameAsync(appId);
       HashSet<IAchievement> achievements = new HashSet<IAchievement>();
-      IReadOnlyCollection<SchemaGameAchievementModel> resultList = task.Result.Data.AvailableGameStats.Achievements;
+      var response = task.Result.Data;
+      if (response.AvailableGameStats == null || response.AvailableGameStats.Achievements == null)
+      {
+        return new HashSet<IAchievement>();
+      }
+      IReadOnlyCollection<SchemaGameAchievementModel> resultList = response.AvailableGameStats.Achievements;
       foreach (SchemaGameAchievementModel a in resultList)
       {
         IAchievement ach = new Achievement(a.DisplayName, a.Description, a.Icon);
@@ -34,21 +41,33 @@ namespace de.inc47.SteamWebAPI
       return achievements;
     }
 
-    public HashSet<IGame> GetGamesOfUser(ulong steamId)
+    public IEnumerable<IGame> GetGamesOfUser(ulong steamId)
     {
       var i = new PlayerService(_apiKey);
       var task = i.GetOwnedGamesAsync(steamId, true, true);
       
-      HashSet<IGame> result = new HashSet<IGame>();
-      foreach (OwnedGameModel game in task.Result.Data.OwnedGames)
-      {
-        IGame g = new Game(game.AppId, game.Name, game.ImgIconUrl, game.PlaytimeForever);
-        result.Add(g);
-      }
-      return result;
+      return task.Result.Data.OwnedGames.Select(og => new Game(og.AppId,og.Name,og.ImgIconUrl,og.PlaytimeForever));
     }
 
-    
+    public Tuple<string, string> GetUserInfo(ulong steamId)
+    {
+      var i = new SteamUser(_apiKey);
+      var t = i.GetPlayerSummaryAsync(steamId);
+      PlayerSummaryModel m = t.Result.Data;
+      return new Tuple<string, string>(m.Nickname, m.AvatarFullUrl);
+    }
+
+    public void GetAchievementCompletionStates(ulong steamId, IGame game)
+    {
+      var i = new SteamUserStats(_apiKey);
+      var t = i.GetPlayerAchievementsAsync(game.AppId, steamId);
+      var result = t.Result.Data;
+      foreach (var playerAchievementModel in result.Achievements.Where(a => a.Achieved == 1))
+      {
+        var a = game.Achievements.First(ach => ach.Name == playerAchievementModel.Name);
+        a.Completed = true;
+      }
+    }
   }
 }
 
