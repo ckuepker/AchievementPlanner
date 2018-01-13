@@ -12,7 +12,7 @@
         <Image Source="{Binding IconUrl}" Height="32" Width="32" />
         <TextBlock Text="{Binding Name}" Width="600"></TextBlock>
         <StackPanel Orientation="Vertical">
-          <TextBlock Text="{Binding CompletionRate}"></TextBlock>
+          <TextBlock Text="{Binding CompletionRate, StringFormat=P2}" />
           <TextBlock Text="{Binding AchievementCount}"></TextBlock>
         </StackPanel>
       </StackPanel>

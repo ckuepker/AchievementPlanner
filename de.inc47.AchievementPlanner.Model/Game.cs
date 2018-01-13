@@ -71,7 +71,7 @@ namespace de.inc47.AchievementPlanner.Model
       {
         double completed = CompletedAchievementCount;
         double all = AchievementCount;
-        return 100 * completed / all;
+        return completed / all;
       }
     }
 
