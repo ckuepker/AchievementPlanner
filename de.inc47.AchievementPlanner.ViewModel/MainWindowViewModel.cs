@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using de.inc47.AchievementPlanner.Model;
 using de.inc47.SteamWebAPI;
@@ -105,6 +106,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
           OnPropertyChanged("Games");
           Status = Status + "\r\nStoring Result...";
           _store.Save(User);
+          File.WriteAllText("E:\\data\\dev\\net\\achievement_planner_import.log", Status);
         };
         bw.RunWorkerAsync();
       }
