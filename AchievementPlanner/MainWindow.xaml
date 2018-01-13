@@ -19,18 +19,22 @@
     </DataTemplate>
   </Window.Resources>
   <Grid>
-    <StackPanel Orientation ="Vertical" Visibility="{Binding Initialized, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+    <Grid.RowDefinitions>
+      <RowDefinition></RowDefinition>
+      <RowDefinition Height="200"></RowDefinition>
+    </Grid.RowDefinitions>
+    <StackPanel Grid.Row="0" Orientation ="Vertical" Visibility="{Binding Initialized, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
       <TextBlock Text="Enter your Steam ID:"></TextBlock>
       <TextBox Text="{Binding SteamId}"></TextBox>
       <Button Content="Load Profile" Click="ButtonBase_OnClick"></Button>
-      <TextBox Name="LogTextBox" Height="400" Width="800" VerticalScrollBarVisibility="Visible" Text="{Binding Status}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
     </StackPanel>
-    <StackPanel Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
+    <StackPanel Grid.Row="0" Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
       <StackPanel Orientation="Horizontal">
         <Image Width="64" Height="64" Source="{Binding User.AvatarUrl}"></Image>
         <TextBlock Width="400" Height="64" Text="{Binding User.Name}" FontSize="32"></TextBlock>
       </StackPanel>
       <ListView Height="450" ItemsSource="{Binding Games}" />
     </StackPanel>
+    <TextBox Grid.Row="1" IsEnabled="False" Name="LogTextBox" Height="200" Width="800" VerticalScrollBarVisibility="Visible" Text="{Binding Status}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
   </Grid>
 </Window>
