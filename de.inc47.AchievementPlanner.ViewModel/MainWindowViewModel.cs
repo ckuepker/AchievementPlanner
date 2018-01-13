@@ -22,7 +22,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
       if (User != null)
       {
         Initialized = true;
-        Games = User.OwnedGames;
+        Games = User.OwnedGames.Where(g => g.AchievementCount > 0);
       }
       else
       {

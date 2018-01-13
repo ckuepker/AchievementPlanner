@@ -14,5 +14,7 @@ namespace de.inc47.AchievementPlanner.Model
     /// </summary>
     IEnumerable<IAchievement> Achievements { get; set; }
     double CompletionRate { get; }
+    int CompletedAchievementCount { get; }
+    int AchievementCount { get; }
   }
 }

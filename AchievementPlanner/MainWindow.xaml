@@ -8,7 +8,14 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
     <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
     <DataTemplate DataType="{x:Type model:Game}">
-      <TextBlock Text="{Binding Name}"></TextBlock>
+      <StackPanel Orientation="Horizontal">
+        <Image Source="{Binding IconUrl}" Height="64" Width="64" />
+        <TextBlock Text="{Binding Name}" Width="600"></TextBlock>
+        <StackPanel Orientation="Vertical">
+          <TextBlock Text="{Binding CompletionRate}"></TextBlock>
+          <TextBlock Text="{Binding AchievementCount}"></TextBlock>
+        </StackPanel>
+      </StackPanel>
     </DataTemplate>
   </Window.Resources>
   <Grid>
