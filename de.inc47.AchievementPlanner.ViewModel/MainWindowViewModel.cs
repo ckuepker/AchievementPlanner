@@ -22,7 +22,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
       if (User != null)
       {
         Initialized = true;
-        Games = User.OwnedGames.Where(g => g.AchievementCount > 0);
+        Games = User.OwnedGames.Where(g => g.CompletedAchievementCount > 0).OrderBy(g => g.CompletionRate);
       }
       else
       {
@@ -98,7 +98,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
             i++;
           }
           User = new User(numericValue, userInfo.Item1, userInfo.Item2) { OwnedGames = games };
-          Games = gamesWithAchievements;
+          Games = gamesWithAchievements.Where(g => g.CompletedAchievementCount > 0);
           Initialized = true;
           OnPropertyChanged("Initialized");
           OnPropertyChanged("User");
