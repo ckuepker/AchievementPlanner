@@ -78,14 +78,22 @@ namespace de.inc47.AchievementPlanner.ViewModel
           {
             Status = Status + string.Format("\r\nLoading achievements for '{0}' ({1})... ({2}/{3})", g.Name, g.AppId, i, gameCount);
             // Gets names, icons and global completion
-            g.Achievements = _facade.GetAchievements(g.AppId);
-            Status = Status + string.Format("\r\n\t-> Found {0} achievements", g.Achievements.Count());
-            if (g.Achievements.Any())
+            try
             {
-              gamesWithAchievements.Add(g);
-              // Sets unlock state for current user
-              Status = Status + string.Format("\r\nLoading achievement completion for '{0}' ({1})...", g.Name, g.AppId);
-              _facade.GetAchievementCompletionStates(numericValue, g);
+              g.Achievements = _facade.GetAchievements(g.AppId);
+              Status = Status + string.Format("\r\n\t-> Found {0} achievements", g.Achievements.Count());
+              if (g.Achievements.Any())
+              {
+                gamesWithAchievements.Add(g);
+                // Sets unlock state for current user
+                Status = Status + string.Format("\r\nLoading achievement completion for '{0}' ({1})...", g.Name,
+                           g.AppId);
+                _facade.GetAchievementCompletionStates(numericValue, g);
+              }
+            }
+            catch (Exception ex)
+            {
+              Status = Status + "\r\nERROR: Could not load achievements: " + ex.Message;
             }
             i++;
           }

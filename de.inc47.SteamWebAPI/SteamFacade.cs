@@ -19,10 +19,6 @@ namespace de.inc47.SteamWebAPI
 
     public HashSet<IAchievement> GetAchievements(uint appId)
     {
-      if (appId == 240 || appId == 730 || appId == 221910 || appId == 630)
-      {
-        return new HashSet<IAchievement>();
-      }
       var i = new SteamUserStats(_apiKey);
       //var task = i.GetGlobalAchievementPercentagesForAppAsync(appId);
       var task = i.GetSchemaForGameAsync(appId);
