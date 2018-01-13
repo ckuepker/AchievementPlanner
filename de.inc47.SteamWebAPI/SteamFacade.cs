@@ -50,7 +50,7 @@ namespace de.inc47.SteamWebAPI
       var i = new SteamUser(_apiKey);
       var t = i.GetPlayerSummaryAsync(steamId);
       PlayerSummaryModel m = t.Result.Data;
-      return new Tuple<string, string>(m.Nickname, m.AvatarFullUrl);
+      return new Tuple<string, string>(m.Nickname, m.AvatarMediumUrl);
     }
 
     public void GetAchievementCompletionStates(ulong steamId, IGame game)
