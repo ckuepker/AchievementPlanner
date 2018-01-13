@@ -9,7 +9,7 @@
     <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
     <DataTemplate DataType="{x:Type model:Game}">
       <StackPanel Orientation="Horizontal">
-        <Image Source="{Binding IconUrl}" Height="64" Width="64" />
+        <Image Source="{Binding IconUrl}" Height="32" Width="32" />
         <TextBlock Text="{Binding Name}" Width="600"></TextBlock>
         <StackPanel Orientation="Vertical">
           <TextBlock Text="{Binding CompletionRate}"></TextBlock>
@@ -27,10 +27,10 @@
     </StackPanel>
     <StackPanel Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
       <StackPanel Orientation="Horizontal">
-        <Image Width="128" Height="128" Source="{Binding User.AvatarUrl}"></Image>
-        <TextBlock Width="400" Height="128" Text="{Binding User.Name}" FontSize="32"></TextBlock>
+        <Image Width="64" Height="64" Source="{Binding User.AvatarUrl}"></Image>
+        <TextBlock Width="400" Height="64" Text="{Binding User.Name}" FontSize="32"></TextBlock>
       </StackPanel>
-      <ListView Height="600" ItemsSource="{Binding Games}" />
+      <ListView Height="450" ItemsSource="{Binding Games}" />
     </StackPanel>
   </Grid>
 </Window>
