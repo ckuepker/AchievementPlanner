@@ -7,7 +7,7 @@ namespace de.inc47.AchievementPlanner.Model
 {
   public class Game : IGame
   {
-    private readonly string _iconUrl;
+    private string _iconUrl;
 
     /// <summary>
     /// Creates a game info without associated achievements
@@ -20,7 +20,7 @@ namespace de.inc47.AchievementPlanner.Model
     {
       AppId = appId;
       Name = name;
-      _iconUrl = iconUrl;
+      IconUrl = iconUrl;
       Playtime = playtime;
     }
 
@@ -37,7 +37,7 @@ namespace de.inc47.AchievementPlanner.Model
     {
       AppId = appId;
       Name = name;
-      _iconUrl = iconUrl;
+      IconUrl = iconUrl;
       Playtime = playtime;
       Achievements = achievements;
     }
@@ -47,7 +47,19 @@ namespace de.inc47.AchievementPlanner.Model
 
     public string IconUrl
     {
-      get { return string.Format("http://media.steampowered.com/steamcommunity/public/images/apps/{0}/{1}.jpg",AppId,_iconUrl); }
+      get { return _iconUrl; }
+      private set
+      {
+        if (!string.IsNullOrEmpty(value) && !value.EndsWith(".jpg") && !value.StartsWith("http://"))
+        {
+          _iconUrl = string.Format("http://media.steampowered.com/steamcommunity/public/images/apps/{0}/{1}.jpg", AppId,
+            value);
+        }
+        else
+        {
+          _iconUrl = value;
+        }
+      }
     }
 
     public TimeSpan Playtime { get; }
@@ -65,12 +77,12 @@ namespace de.inc47.AchievementPlanner.Model
 
     public int CompletedAchievementCount
     {
-      get { return Achievements.Count(a => a.Completed); }
+      get { return Achievements != null ? Achievements.Count(a => a.Completed) : 0; }
     }
 
     public int AchievementCount
     {
-      get { return Achievements.Count(); }
+      get { return Achievements != null ? Achievements.Count() : 0; }
     }
   }
 }
