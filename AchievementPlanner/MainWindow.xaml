@@ -4,6 +4,7 @@
         xmlns:model="clr-namespace:de.inc47.AchievementPlanner.Model;assembly=de.inc47.AchievementPlanner.Model"
         xmlns:converter="clr-namespace:AchievementPlanner.Converter"
         Title="MainWindow" SizeToContent="WidthAndHeight">
+  
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
     <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
@@ -18,23 +19,33 @@
       </StackPanel>
     </DataTemplate>
   </Window.Resources>
+  
   <Grid>
     <Grid.RowDefinitions>
+      <RowDefinition Height="45"></RowDefinition>
       <RowDefinition></RowDefinition>
       <RowDefinition Height="200"></RowDefinition>
     </Grid.RowDefinitions>
-    <StackPanel Grid.Row="0" Orientation ="Vertical" Visibility="{Binding Initialized, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Name="ToolbarStackPanel">
+      <Button Name="SaveButton" Command="{Binding SaveCommand}">
+        <StackPanel Orientation="Horizontal">
+          <Image Source="Assets/Icons/black-save-32.png" Width="32" Height="32" />
+          <TextBlock Text="Save"></TextBlock>
+        </StackPanel>
+      </Button>
+    </StackPanel>
+    <StackPanel Grid.Row="1" Orientation ="Vertical" Visibility="{Binding Initialized, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
       <TextBlock Text="Enter your Steam ID:"></TextBlock>
       <TextBox Text="{Binding SteamId}"></TextBox>
       <Button Content="Load Profile" Click="ButtonBase_OnClick"></Button>
     </StackPanel>
-    <StackPanel Grid.Row="0" Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
+    <StackPanel Grid.Row="1" Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
       <StackPanel Orientation="Horizontal">
         <Image Width="64" Height="64" Source="{Binding User.AvatarUrl}"></Image>
         <TextBlock Width="400" Height="64" Text="{Binding User.Name}" FontSize="32"></TextBlock>
       </StackPanel>
       <ListView Height="450" ItemsSource="{Binding Games}" />
     </StackPanel>
-    <TextBox Grid.Row="1" IsEnabled="False" Name="LogTextBox" Height="200" Width="800" VerticalScrollBarVisibility="Visible" Text="{Binding Status}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+    <TextBox Grid.Row="2" IsEnabled="False" Name="LogTextBox" Height="200" Width="800" VerticalScrollBarVisibility="Visible" Text="{Binding Status}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
   </Grid>
 </Window>

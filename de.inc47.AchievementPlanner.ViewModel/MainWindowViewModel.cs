@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Input;
 using de.inc47.AchievementPlanner.Model;
 using de.inc47.SteamWebAPI;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace de.inc47.AchievementPlanner.ViewModel
 {
@@ -110,6 +112,14 @@ namespace de.inc47.AchievementPlanner.ViewModel
         };
         bw.RunWorkerAsync();
       }
+    }
+
+    public ICommand SaveCommand
+    {
+      get { return new RelayCommand(() =>
+      {
+        _store.Save(User);
+      },() => User != null); }
     }
   }
 }
