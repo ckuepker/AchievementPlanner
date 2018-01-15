@@ -40,7 +40,7 @@ namespace de.inc47.SteamWebAPI
     public IEnumerable<IGame> GetGamesOfUser(ulong steamId)
     {
       var i = new PlayerService(_apiKey);
-      var task = i.GetOwnedGamesAsync(steamId, true, true);
+      var task = i.GetOwnedGamesAsync(steamId, includeAppInfo: true, includeFreeGames: true);
       
       return task.Result.Data.OwnedGames.Select(og => new Game(og.AppId,og.Name,og.ImgIconUrl,og.PlaytimeForever));
     }
