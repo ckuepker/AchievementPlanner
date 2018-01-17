@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Newtonsoft.Json;
 
 namespace de.inc47.AchievementPlanner.Model
 {
-  public class Game : IGame
+  public class Game : ModelElement, IGame
   {
     private string _iconUrl;
+    private IEnumerable<IAchievement> _achievements;
 
     /// <summary>
     /// Creates a game info without associated achievements
@@ -63,7 +65,33 @@ namespace de.inc47.AchievementPlanner.Model
     }
 
     public TimeSpan Playtime { get; }
-    public IEnumerable<IAchievement> Achievements { get; set; }
+
+    public IEnumerable<IAchievement> Achievements
+    {
+      get { return _achievements; }
+      set
+      {
+        if (_achievements != value)
+        {
+          Dirty = true;
+          if (_achievements != null && _achievements.Any())
+          {
+            foreach (var achievement in _achievements)
+            {
+              PropertyChangedEventManager.RemoveListener(achievement, this, string.Empty);
+            }
+          }
+          _achievements = value;
+          if (_achievements != null && _achievements.Any())
+          {
+            foreach (var achievement in _achievements)
+            {
+              PropertyChangedEventManager.AddListener(achievement, this, string.Empty);
+            }
+          }
+        }
+      }
+    }
 
     public double CompletionRate
     {
@@ -83,6 +111,23 @@ namespace de.inc47.AchievementPlanner.Model
     public int AchievementCount
     {
       get { return Achievements != null ? Achievements.Count() : 0; }
+    }
+
+    public override bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+    {
+      string propertyName = ((PropertyChangedEventArgs) e).PropertyName;
+      switch (propertyName)
+      {
+        case "Dirty":
+          Dirty = true;
+          break;
+        case "Completed":
+          Dirty = true;
+          OnPropertyChanged("CompletedAchievementCount");
+          OnPropertyChanged("CompletionRate");
+          break;
+      }
+      return base.ReceiveWeakEvent(managerType, sender, e);
     }
   }
 }

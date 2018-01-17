@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace de.inc47.AchievementPlanner.Model
 {
-  public class User : IUser
+  public class User : ModelElement, IUser
   {
     /// <summary>
     /// Creates a user without associated games.

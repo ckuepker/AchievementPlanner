@@ -2,7 +2,7 @@
 
 namespace de.inc47.AchievementPlanner.Model
 {
-  public interface IUser
+  public interface IUser : IModelElement
   {
     string Name { get; }
     ulong SteamId { get; }

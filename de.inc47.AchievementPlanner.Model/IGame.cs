@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace de.inc47.AchievementPlanner.Model
 {
-  public interface IGame
+  public interface IGame : IModelElement
   {
     uint AppId { get; }
     string Name { get; }

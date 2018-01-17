@@ -2,8 +2,11 @@
 
 namespace de.inc47.AchievementPlanner.Model
 {
-  public class Achievement : IAchievement
+  public class Achievement : ModelElement, IAchievement
   {
+    private bool _completed;
+    private double _globalCompletionPercentage;
+
     public Achievement(string name, string description, string iconUrl)
     {
       Name = name;
@@ -13,11 +16,38 @@ namespace de.inc47.AchievementPlanner.Model
       Unlockable = true;
     }
 
-    public string Name { get; set; }
+    public string Name { get; }
     public string Description { get; }
     public string IconUrl { get; }
-    public bool Completed { get; set; }
-    public bool Unlockable { get; set; }
-    public double GlobalCompletionPercentage { get; set; }
+
+    public bool Completed
+    {
+      get { return _completed; }
+      set
+      {
+        if (value != _completed)
+        {
+          _completed = value;
+          Dirty = true;
+          OnPropertyChanged();
+        }
+      }
+    }
+
+    public bool Unlockable { get; }
+
+    public double GlobalCompletionPercentage
+    {
+      get { return _globalCompletionPercentage; }
+      set
+      {
+        if (value != _globalCompletionPercentage)
+        {
+          _globalCompletionPercentage = value;
+          Dirty = true;
+          OnPropertyChanged();
+        }
+      }
+    }
   }
 }
