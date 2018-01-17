@@ -45,7 +45,7 @@ namespace SteamWebAPITest
     {
       Tuple<string, string> info = _sut.GetUserInfo(_steamId);
       Assert.AreEqual("Contra 0x2F", info.Item1);
-      Assert.AreEqual("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/2a/2ad0555225c30d3d506aa9d2e51e356817ba6be9_full.jpg", info.Item2);
+      Assert.AreEqual("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/2a/2ad0555225c30d3d506aa9d2e51e356817ba6be9_medium.jpg", info.Item2);
     }
 
     [Test]
