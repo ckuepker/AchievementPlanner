@@ -24,11 +24,13 @@ namespace de.inc47.AchievementPlanner.Model
       try
       {
         string serializedUser = File.ReadAllText(_location);
-        return JsonConvert.DeserializeObject<User>(serializedUser, new JsonSerializerSettings()
+        IUser u =  JsonConvert.DeserializeObject<User>(serializedUser, new JsonSerializerSettings()
         {
           // Allows deserialization of IEnumerable<IGame/IAchievement>
           TypeNameHandling = TypeNameHandling.Objects
         });
+        u.Dirty = false;
+        return u;
       }
       catch (FileNotFoundException ex)
       {
