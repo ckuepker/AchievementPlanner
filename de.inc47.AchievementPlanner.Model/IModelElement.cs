@@ -8,6 +8,6 @@ namespace de.inc47.AchievementPlanner.Model
   /// </summary>
   public interface IModelElement : INotifyPropertyChanged, IWeakEventListener
   {
-    bool Dirty { get; }
+    bool Dirty { get; set; }
   }
 }

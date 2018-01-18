@@ -106,8 +106,6 @@ namespace de.inc47.AchievementPlanner.ViewModel
           OnPropertyChanged("Initialized");
           OnPropertyChanged("User");
           OnPropertyChanged("Games");
-          Status = Status + "\r\nStoring Result...";
-          _store.Save(User);
           File.WriteAllText("E:\\data\\dev\\net\\achievement_planner_import.log", Status);
         };
         bw.RunWorkerAsync();
@@ -119,7 +117,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
       get { return new RelayCommand(() =>
       {
         _store.Save(User);
-      },() => User != null); }
+      },() => User != null && User.Dirty); }
     }
   }
 }
