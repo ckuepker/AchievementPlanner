@@ -119,5 +119,30 @@ namespace de.inc47.AchievementPlanner.ViewModel
         _store.Save(User);
       },() => User != null && User.Dirty); }
     }
+
+    public ICommand UpdateCompletionStatesCommand
+    {
+      get { return new RelayCommand(() =>
+      {
+        using (var bw = new BackgroundWorker())
+        {
+          bw.DoWork += (sender, args) =>
+          {
+            Status = "Updating Achievements for all games...\r\n";
+            int i = 0;
+            IList<IGame> gamesToCheck = User.OwnedGames.Where(g => g.Achievements != null && g.Achievements.Any()).ToList();
+            int count = gamesToCheck.Count;
+            foreach (IGame g in gamesToCheck)
+            {
+              i++;
+              Status = Status + string.Format("({0}/{1}) Loading Achievements for {2} ...\r\n", i, count, g.Name);
+              _facade.GetAchievementCompletionStates(User.SteamId, g);
+            }
+            User.Dirty = true;
+          };
+          bw.RunWorkerAsync();
+        }
+      }, () => true); }
+    }
   }
 }

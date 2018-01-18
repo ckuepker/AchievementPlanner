@@ -30,7 +30,13 @@
       <Button Name="SaveButton" Command="{Binding SaveCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Source="Assets/Icons/black-save-32.png" Width="32" Height="32" />
-          <TextBlock Text="Save"></TextBlock>
+          <TextBlock Text="Save" />
+        </StackPanel>
+      </Button>
+      <Button Name="UpdateCompletionButton" Command="{Binding UpdateCompletionStatesCommand}">
+        <StackPanel Orientation="Horizontal">
+          <Image Source="Assets/Icons/.jpg" Width="32" Height="32"/>
+          <TextBlock Text="Update Completion States" />
         </StackPanel>
       </Button>
     </StackPanel>
