@@ -40,11 +40,13 @@ namespace de.inc47.AchievementPlanner.Model
     {
       var serializedUser = JsonConvert.SerializeObject(u, new JsonSerializerSettings()
       {
+        Formatting = Formatting.Indented,
         // Set attributes so that IEnumerable<IGame/IAchievement> can be deserialized
         TypeNameHandling = TypeNameHandling.Objects,
         TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
       });
       File.WriteAllText(_location, serializedUser);
+      u.Dirty = false;
     }
   }
 }
