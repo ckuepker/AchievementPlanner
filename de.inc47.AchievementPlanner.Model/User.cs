@@ -17,6 +17,7 @@ namespace de.inc47.AchievementPlanner.Model
       SteamId = steamId;
       Name = name;
       AvatarUrl = avatarUrl;
+      Dirty = true;
     }
 
     /// <summary>
