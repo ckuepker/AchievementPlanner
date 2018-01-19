@@ -41,8 +41,10 @@ namespace de.inc47.SteamWebAPI
     {
       var i = new PlayerService(_apiKey);
       var task = i.GetOwnedGamesAsync(steamId, includeAppInfo: true, includeFreeGames: true);
-      
-      return task.Result.Data.OwnedGames.Select(og => new Game(og.AppId,og.Name,og.ImgIconUrl,og.PlaytimeForever));
+
+      IList<Game> games = task.Result.Data.OwnedGames.Select(og => new Game(og.AppId, og.Name, og.ImgIconUrl, og.PlaytimeForever)).ToList();
+      games.Add(new Game(245550, "Free To Play", "", TimeSpan.FromMinutes(90)));
+      return games;
     }
 
     public Tuple<string, string> GetUserInfo(ulong steamId)
