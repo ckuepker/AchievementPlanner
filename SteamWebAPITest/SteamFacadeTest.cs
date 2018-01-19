@@ -25,19 +25,25 @@ namespace SteamWebAPITest
     [Test]
     public void TestGetGamesOfUser()
     {
-      IEnumerable<uint> games = _sut.GetGamesOfUser(_steamId).Select(g => g.AppId);
+      IEnumerable<uint> games = _sut.GetGamesOfUser(_steamId).Select(g => g.AppId).ToList();
       CollectionAssert.IsNotEmpty(games);
       Assert.AreEqual(130, games.Count());
       CollectionAssert.Contains(games, 730, "'CS GO' should be in games list");
       CollectionAssert.Contains(games, 245550, "'Free To Play' should be in games list");
+      CollectionAssert.Contains(games, 221910, "'Stanley Parable' should be in games list");
     }
 
     [Test]
-    public void TestGetAchievementsSpaceEngineers()
+    [TestCase("Space Engineers", 244850, 18, "Death Wish")]
+    [TestCase("Stanley Parable", 221910, 10, "Death Wish")]
+    [TestCase("Free To Play", 245550, 5, "Missing")]
+    [TestCase("CS GO", 730, 187, "HE Grenade Expert")]
+    [TestCase("CSS", 240, 187, "Expert Marksman")]
+    public void TestGetAchievements(string gameName, int appId, int expectedCount, string exemplaryAchievementName)
     {
-      HashSet<IAchievement> achievements = _sut.GetAchievements(_appid);
-      Assert.AreEqual(18, achievements.Count);
-      Assert.AreEqual(1, achievements.Count(a => a.Name == "Death Wish"));
+      HashSet<IAchievement> achievements = _sut.GetAchievements((uint)appId);
+      Assert.AreEqual(expectedCount, achievements.Count);
+      Assert.AreEqual(1, achievements.Count(a => a.Name == exemplaryAchievementName));
     }
 
     [Test]
