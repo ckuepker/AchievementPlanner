@@ -32,6 +32,8 @@
           <RowDefinition Height="64"></RowDefinition>
           <RowDefinition Height="20"></RowDefinition>
           <RowDefinition Height="20"></RowDefinition>
+          <RowDefinition Height="20"></RowDefinition>
+          <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="120" />
@@ -65,6 +67,24 @@
                    Grid.Row="1" Grid.Column="4" />
         <TextBlock Text="{Binding CompleteGamesCount}" Style="{StaticResource UserBaseTextBlockStyle}"
                    Grid.Row="2" Grid.Column="4" />
+        
+        <!-- Achievements -->
+        <TextBlock Text="Achievements" Style="{StaticResource HeaderStyle}" 
+                   Grid.Row="3" Grid.Column="1"/>
+        <TextBlock Text="{Binding PossibleAchievementCount}" Style="{StaticResource UserBaseTextBlockStyle}" 
+                   Grid.Row="4" Grid.Column="1"/>
+        <TextBlock Text="Possible Achievements of played games" Style="{StaticResource HeaderStyle}" 
+                   Grid.Row="3" Grid.Column="2"/>
+        <TextBlock Text="{Binding PossibleAchievementOfPlayedGamesCount}" Style="{StaticResource UserBaseTextBlockStyle}" 
+                   Grid.Row="4" Grid.Column="2"/>
+        <TextBlock Text="Possible Achievements of achieved games" Style="{StaticResource HeaderStyle}" 
+                   Grid.Row="3" Grid.Column="3"/>
+        <TextBlock Text="{Binding PossibleAchievementOfAchievedGamesCount}" Style="{StaticResource UserBaseTextBlockStyle}" 
+                   Grid.Row="4" Grid.Column="3"/>
+        <TextBlock Text="Achieved" Style="{StaticResource HeaderStyle}" 
+                   Grid.Row="3" Grid.Column="4"/>
+        <TextBlock Text="{Binding AchievedAchievementCount}" Style="{StaticResource UserBaseTextBlockStyle}" 
+                   Grid.Row="4" Grid.Column="4"/>
       </Grid>
     </DataTemplate>
   </Window.Resources>

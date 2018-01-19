@@ -43,31 +43,75 @@ namespace de.inc47.AchievementPlanner.Model
     public string AvatarUrl { get; }
     public IEnumerable<IGame> OwnedGames { get; set; }
 
-    public uint GameCount
-    {
-      get { return (uint)OwnedGames.Count(); }
-    }
-
-    public uint GamesWithAchievementsCount
-    {
-      get { return (uint)OwnedGames.Count(g => g.AchievementCount > 0); }
-    }
-
-    public uint GamesWithAchievedAchievementsCount
-    {
-      get { return (uint)OwnedGames.Count(g => g.AchievementCount > 0 && g.Achievements.Any(a => a.Completed)); }
-    }
-
-    public uint PlayedGamesWithAchievementsCount
-    {
-      get { return (uint)OwnedGames.Count(g => g.Playtime > TimeSpan.Zero && g.AchievementCount > 0); }
-    }
-
-    public uint CompleteGamesCount
+    public int GameCount
     {
       get
       {
-        return (uint)OwnedGames.Count(g => g.AchievementCount > 0 && g.Achievements.All(a => a.Completed));
+        return OwnedGames.Count();
+      }
+    }
+
+    public int GamesWithAchievementsCount
+    {
+      get
+      {
+        return OwnedGames.Count(g => g.AchievementCount > 0);
+      }
+    }
+
+    public int GamesWithAchievedAchievementsCount
+    {
+      get
+      {
+        return OwnedGames.Count(g => g.AchievementCount > 0 && g.Achievements.Any(a => a.Completed));
+      }
+    }
+
+    public int PlayedGamesWithAchievementsCount
+    {
+      get
+      {
+        return OwnedGames.Count(g => g.Playtime > TimeSpan.Zero && g.AchievementCount > 0);
+      }
+    }
+
+    public int CompleteGamesCount
+    {
+      get
+      {
+        return OwnedGames.Count(g => g.AchievementCount > 0 && g.Achievements.All(a => a.Completed));
+      }
+    }
+
+    public int PossibleAchievementCount
+    {
+      get
+      {
+        return OwnedGames.Sum(g => g.AchievementCount);
+      }
+    }
+
+    public int PossibleAchievementOfPlayedGamesCount
+    {
+      get
+      {
+        return OwnedGames.Where(g => g.AchievementCount > 0 && g.Playtime > TimeSpan.Zero).Sum(g => g.AchievementCount);
+      }
+    }
+
+    public int PossibleAchievementOfAchievedGamesCount
+    {
+      get
+      {
+        return OwnedGames.Where(g => g.AchievementCount > 0 && g.Achievements.Any(a => a.Completed)).Sum(g => g.AchievementCount);
+      }
+    }
+
+    public int AchievedAchievementCount
+    {
+      get
+      {
+        return OwnedGames.Where(g => g.CompletedAchievementCount > 0).Sum(g => g.CompletedAchievementCount);
       }
     }
   }
