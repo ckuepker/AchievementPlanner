@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace de.inc47.AchievementPlanner.Model
@@ -40,5 +42,33 @@ namespace de.inc47.AchievementPlanner.Model
     public ulong SteamId { get; }
     public string AvatarUrl { get; }
     public IEnumerable<IGame> OwnedGames { get; set; }
+
+    public uint GameCount
+    {
+      get { return (uint)OwnedGames.Count(); }
+    }
+
+    public uint GamesWithAchievementsCount
+    {
+      get { return (uint)OwnedGames.Count(g => g.AchievementCount > 0); }
+    }
+
+    public uint GamesWithAchievedAchievementsCount
+    {
+      get { return (uint)OwnedGames.Count(g => g.AchievementCount > 0 && g.Achievements.Any(a => a.Completed)); }
+    }
+
+    public uint PlayedGamesWithAchievementsCount
+    {
+      get { return (uint)OwnedGames.Count(g => g.Playtime > TimeSpan.Zero && g.AchievementCount > 0); }
+    }
+
+    public uint CompleteGamesCount
+    {
+      get
+      {
+        return (uint)OwnedGames.Count(g => g.AchievementCount > 0 && g.Achievements.All(a => a.Completed));
+      }
+    }
   }
 }

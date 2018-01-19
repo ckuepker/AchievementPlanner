@@ -4,7 +4,7 @@
         xmlns:model="clr-namespace:de.inc47.AchievementPlanner.Model;assembly=de.inc47.AchievementPlanner.Model"
         xmlns:converter="clr-namespace:AchievementPlanner.Converter"
         Title="MainWindow" SizeToContent="WidthAndHeight">
-  
+
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
     <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
@@ -19,7 +19,7 @@
       </StackPanel>
     </DataTemplate>
   </Window.Resources>
-  
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="45"></RowDefinition>
@@ -46,10 +46,44 @@
       <Button Content="Load Profile" Click="ButtonBase_OnClick"></Button>
     </StackPanel>
     <StackPanel Grid.Row="1" Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
-      <StackPanel Orientation="Horizontal">
-        <Image Width="64" Height="64" Source="{Binding User.AvatarUrl}"></Image>
-        <TextBlock Width="400" Height="64" Text="{Binding User.Name}" FontSize="32"></TextBlock>
-      </StackPanel>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="64"></RowDefinition>
+          <RowDefinition Height="20"></RowDefinition>
+          <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="120" />
+          <ColumnDefinition Width="120" />
+          <ColumnDefinition Width="120" />
+          <ColumnDefinition Width="120" />
+          <ColumnDefinition Width="120" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+          <Image Width="64" Height="64" Source="{Binding User.AvatarUrl}" />
+          <TextBlock Width="400" Height="64" Text="{Binding User.Name}" FontSize="32" />
+        </StackPanel>
+        <TextBlock Text="Games" 
+                 Grid.Row="1" Grid.Column="0"/>
+        <TextBlock Text="{Binding User.GameCount}" 
+                 Grid.Row="2" Grid.Column="0"/>
+        <TextBlock Text="Games with Achievements"
+                 Grid.Row="1" Grid.Column="1" />
+        <TextBlock Text="{Binding User.GamesWithAchievementsCount}"
+                 Grid.Row="2" Grid.Column="1" />
+        <TextBlock Text="Played Games with Achievements"
+                   Grid.Row="1" Grid.Column="2" />
+        <TextBlock Text="{Binding User.PlayedGamesWithAchievementsCount}"
+                   Grid.Row="2" Grid.Column="2" />
+        <TextBlock Text="Games with achieved Achievements"
+                 Grid.Row="1" Grid.Column="3" />
+        <TextBlock Text="{Binding User.GamesWithAchievedAchievementsCount}"
+                 Grid.Row="2" Grid.Column="3" />
+        <TextBlock Text="Completed"
+                   Grid.Row="1" Grid.Column="4" />
+        <TextBlock Text="{Binding User.CompleteGamesCount}"
+                   Grid.Row="2" Grid.Column="4" />
+      </Grid>
       <ListView Height="450" ItemsSource="{Binding Games}" />
     </StackPanel>
     <TextBox Grid.Row="2" IsEnabled="False" Name="LogTextBox" Height="200" Width="800" VerticalScrollBarVisibility="Visible" Text="{Binding Status}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
