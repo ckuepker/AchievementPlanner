@@ -27,7 +27,7 @@ namespace SteamWebAPITest
     {
       IEnumerable<uint> games = _sut.GetGamesOfUser(_steamId).Select(g => g.AppId).ToList();
       CollectionAssert.IsNotEmpty(games);
-      Assert.AreEqual(131, games.Count());
+      Assert.AreEqual(132, games.Count());
       CollectionAssert.Contains(games, 730, "'CS GO' should be in games list");
       CollectionAssert.Contains(games, 245550, "'Free To Play' should be in games list");
       CollectionAssert.Contains(games, 221910, "'Stanley Parable' should be in games list");
@@ -35,10 +35,10 @@ namespace SteamWebAPITest
 
     [Test]
     [TestCase("Space Engineers", 244850, 18, "Death Wish")]
-    [TestCase("Stanley Parable", 221910, 10, "Death Wish")]
+    [TestCase("Stanley Parable", 221910, 10, "Unachievable")]
     [TestCase("Free To Play", 245550, 5, "Missing")]
-    [TestCase("CS GO", 730, 187, "HE Grenade Expert")]
-    [TestCase("CSS", 240, 187, "Expert Marksman")]
+    [TestCase("CS GO", 730, 167, "HE Grenade Expert")]
+    [TestCase("CSS", 240, 147, "Expert Marksman")]
     public void TestGetAchievements(string gameName, int appId, int expectedCount, string exemplaryAchievementName)
     {
       HashSet<IAchievement> achievements = _sut.GetAchievements((uint)appId);
