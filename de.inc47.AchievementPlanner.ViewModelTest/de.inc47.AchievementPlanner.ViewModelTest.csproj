@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{259FCD14-628E-4B30-A86F-907B3029FD09}</ProjectGuid>
+    <ProjectGuid>{696B91C4-56E2-4CA4-821D-79C643405E78}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>de.inc47.AchievementPlanner.ViewModel</RootNamespace>
-    <AssemblyName>de.inc47.AchievementPlanner.ViewModel</AssemblyName>
+    <RootNamespace>de.inc47.AchievementPlanner.ViewModelTest</RootNamespace>
+    <AssemblyName>de.inc47.AchievementPlanner.ViewModelTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,23 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    <Reference Include="Moq, Version=4.5.28.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.5.28\lib\net45\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,27 +50,26 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IViewModelBase.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="MainWindowViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserInfoViewModel.cs" />
+    <Compile Include="UserInfoViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\de.inc47.AchievementPlanner.Configuration\de.inc47.AchievementPlanner.Configuration.csproj">
-      <Project>{E554F955-C7F4-44E9-B7EA-65FAED7A2A5F}</Project>
-      <Name>de.inc47.AchievementPlanner.Configuration</Name>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\de.inc47.AchievementPlanner.ModelTest\de.inc47.AchievementPlanner.ModelTest.csproj">
+      <Project>{6af5595e-2ba5-4d0c-8dff-8561deeada7f}</Project>
+      <Name>de.inc47.AchievementPlanner.ModelTest</Name>
     </ProjectReference>
     <ProjectReference Include="..\de.inc47.AchievementPlanner.Model\de.inc47.AchievementPlanner.Model.csproj">
       <Project>{F3F1D1D6-069D-4214-9621-4D81A6483908}</Project>
       <Name>de.inc47.AchievementPlanner.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\de.inc47.SteamWebAPI\de.inc47.SteamWebAPI.csproj">
-      <Project>{0F0BEB85-4AA7-4B1F-9A5E-07B0C9A01F4E}</Project>
-      <Name>de.inc47.SteamWebAPI</Name>
+    <ProjectReference Include="..\de.inc47.AchievementPlanner.ViewModel\de.inc47.AchievementPlanner.ViewModel.csproj">
+      <Project>{259FCD14-628E-4B30-A86F-907B3029FD09}</Project>
+      <Name>de.inc47.AchievementPlanner.ViewModel</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

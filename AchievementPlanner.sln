@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.inc47.AchievementPlanner", "AchievementPlanner\de.inc47.AchievementPlanner.csproj", "{B8659F22-914F-4F4C-B84F-FAEDB7C8A3A0}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.inc47.AchievementPlanner.ConfigurationTest", "de.inc47.AchievementPlanner.ConfigurationTest\de.inc47.AchievementPlanner.ConfigurationTest.csproj", "{9435E0B1-B1F4-4379-8827-6FD97A1BD1E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.inc47.AchievementPlanner.ModelTest", "de.inc47.AchievementPlanner.ModelTest\de.inc47.AchievementPlanner.ModelTest.csproj", "{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.inc47.AchievementPlanner.ViewModelTest", "de.inc47.AchievementPlanner.ViewModelTest\de.inc47.AchievementPlanner.ViewModelTest.csproj", "{696B91C4-56E2-4CA4-821D-79C643405E78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{696B91C4-56E2-4CA4-821D-79C643405E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{696B91C4-56E2-4CA4-821D-79C643405E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{696B91C4-56E2-4CA4-821D-79C643405E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{696B91C4-56E2-4CA4-821D-79C643405E78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{C96F9D99-B763-433D-A019-5B4E9AF95DE3} = {001016EC-5EE8-4037-A422-81254312EBB8}
 		{9435E0B1-B1F4-4379-8827-6FD97A1BD1E8} = {001016EC-5EE8-4037-A422-81254312EBB8}
 		{6AF5595E-2BA5-4D0C-8DFF-8561DEEADA7F} = {001016EC-5EE8-4037-A422-81254312EBB8}
+		{696B91C4-56E2-4CA4-821D-79C643405E78} = {001016EC-5EE8-4037-A422-81254312EBB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAA6BB24-41C2-44F0-9FA4-95B6711429F1}

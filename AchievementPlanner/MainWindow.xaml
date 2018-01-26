@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:model="clr-namespace:de.inc47.AchievementPlanner.Model;assembly=de.inc47.AchievementPlanner.Model"
         xmlns:converter="clr-namespace:AchievementPlanner.Converter"
+        xmlns:viewModel="clr-namespace:de.inc47.AchievementPlanner.ViewModel;assembly=de.inc47.AchievementPlanner.ViewModel"
         Title="MainWindow" SizeToContent="WidthAndHeight">
 
   <Window.Resources>
@@ -18,7 +19,7 @@
         </StackPanel>
       </StackPanel>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type model:User}">
+    <DataTemplate DataType="{x:Type viewModel:UserInfoViewModel}">
       <DataTemplate.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="UserBaseTextBlockStyle">
           <Setter Property="TextAlignment" Value="Center" />
@@ -43,7 +44,7 @@
           <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
-          <Image Width="64" Height="64" Source="{Binding AvatarUrl}" />
+          <Image Width="64" Height="64" Source="{Binding Avatar}" />
           <TextBlock Width="400" Height="64" Text="{Binding Name}" FontSize="32" />
         </StackPanel>
         <!-- Games -->
@@ -115,7 +116,7 @@
       <Button Content="Load Profile" Click="ButtonBase_OnClick"></Button>
     </StackPanel>
     <StackPanel Grid.Row="1" Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
-      <ContentPresenter Content="{Binding User}" />
+      <ContentPresenter Content="{Binding UserInfo}" />
       <ListView Height="450" ItemsSource="{Binding Games}" />
     </StackPanel>
     <TextBox Grid.Row="2" IsEnabled="False" Name="LogTextBox" Height="200" Width="800" VerticalScrollBarVisibility="Visible" Text="{Binding Status}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>

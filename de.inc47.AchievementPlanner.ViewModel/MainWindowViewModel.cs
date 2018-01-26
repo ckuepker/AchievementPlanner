@@ -17,6 +17,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
     private IEnumerable<IGame> _games = new List<IGame>();
     private string _status;
     private IStore _store;
+    private IUser _user;
 
     public MainWindowViewModel()
     {
@@ -37,7 +38,23 @@ namespace de.inc47.AchievementPlanner.ViewModel
     /// True if a user has been set from store or loaded via API. Used to display initial profile dialog.
     /// </summary>
     public bool Initialized { get; set; }
-    public IUser User { get; set; }
+
+    public IUser User
+    {
+      get { return _user; }
+      set
+      {
+        UserInfo = null;
+        _user = value;
+        if (_user != null)
+        {
+          UserInfo = new UserInfoViewModel(_user);
+          OnPropertyChanged(nameof(UserInfo));
+        }
+      }
+    }
+
+    public UserInfoViewModel UserInfo { get; set; }
 
     public string SteamId
     {
