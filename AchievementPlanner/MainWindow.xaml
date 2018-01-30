@@ -103,6 +103,12 @@
           <TextBlock Text="Save" />
         </StackPanel>
       </Button>
+      <Button Name="UpdateGamesButton" Command="{Binding UpdateGamesCommand}">
+        <StackPanel Orientation="Horizontal">
+          <Image Source="Assets/Icons/.jpg" Width="32" Height="32"/>
+          <TextBlock Text="Update Games" />
+        </StackPanel>
+      </Button>
       <Button Name="UpdateCompletionButton" Command="{Binding UpdateCompletionStatesCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Source="Assets/Icons/.jpg" Width="32" Height="32"/>

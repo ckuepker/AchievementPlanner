@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
 namespace de.inc47.AchievementPlanner.Model
 {
   public class User : ModelElement, IUser
   {
+    private IEnumerable<IGame> _ownedGames;
+
     /// <summary>
     /// Creates a user without associated games.
     /// </summary>
@@ -22,25 +21,19 @@ namespace de.inc47.AchievementPlanner.Model
       Dirty = true;
     }
 
-    /// <summary>
-    /// Creates a user with associated games. This constructor is required for automated deserialization.
-    /// </summary>
-    /// <param name="steamId"></param>
-    /// <param name="name"></param>
-    /// <param name="avatarUrl"></param>
-    /// <param name="games"></param>
-    [JsonConstructor]
-    public User(ulong steamId, string name, string avatarUrl, IEnumerable<Game> games)
-    {
-      SteamId = steamId;
-      Name = name;
-      AvatarUrl = avatarUrl;
-      OwnedGames = games;
-    }
-
     public string Name { get; }
     public ulong SteamId { get; }
     public string AvatarUrl { get; }
-    public IEnumerable<IGame> OwnedGames { get; set; }
+
+    public IEnumerable<IGame> OwnedGames
+    {
+      get { return _ownedGames; }
+      set
+      {
+        _ownedGames = value;
+        Dirty = true;
+        OnPropertyChanged("OwnedGames");
+      }
+    }
   }
 }

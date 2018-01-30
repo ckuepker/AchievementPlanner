@@ -96,7 +96,8 @@ namespace de.inc47.AchievementPlanner.ViewModel
           int gameCount = games.Count;
           foreach (IGame g in games)
           {
-            Status = Status + string.Format("\r\nLoading achievements for '{0}' ({1})... ({2}/{3})", g.Name, g.AppId, i, gameCount);
+            Status = Status + string.Format("\r\nLoading achievements for '{0}' ({1})... ({2}/{3})", g.Name, g.AppId, i,
+                       gameCount);
             // Gets names, icons and global completion
             try
             {
@@ -131,35 +132,91 @@ namespace de.inc47.AchievementPlanner.ViewModel
 
     public ICommand SaveCommand
     {
-      get { return new RelayCommand(() =>
-      {
-        _store.Save(User);
-      },() => User != null && User.Dirty); }
+      get { return new RelayCommand(() => { _store.Save(User); }, () => User != null && User.Dirty); }
     }
 
     public ICommand UpdateCompletionStatesCommand
     {
-      get { return new RelayCommand(() =>
+      get
       {
-        using (var bw = new BackgroundWorker())
+        return new RelayCommand(() =>
         {
-          bw.DoWork += (sender, args) =>
+          using (var bw = new BackgroundWorker())
           {
-            Status = "Updating Achievements for all games...\r\n";
-            int i = 0;
-            IList<IGame> gamesToCheck = User.OwnedGames.Where(g => g.Achievements != null && g.Achievements.Any()).ToList();
-            int count = gamesToCheck.Count;
-            foreach (IGame g in gamesToCheck)
+            bw.DoWork += (sender, args) =>
             {
-              i++;
-              Status = Status + string.Format("({0}/{1}) Loading Achievements for {2} ...\r\n", i, count, g.Name);
-              _facade.GetAchievementCompletionStates(User.SteamId, g);
-            }
-            User.Dirty = true;
-          };
-          bw.RunWorkerAsync();
-        }
-      }, () => true); }
+              Status = "Updating Achievements for all games...\r\n";
+              int i = 0;
+              IList<IGame> gamesToCheck =
+                User.OwnedGames.Where(g => g.Achievements != null && g.Achievements.Any()).ToList();
+              int count = gamesToCheck.Count;
+              foreach (IGame g in gamesToCheck)
+              {
+                i++;
+                Status = Status + string.Format("({0}/{1}) Loading Achievements for {2} ...\r\n", i, count, g.Name);
+                _facade.GetAchievementCompletionStates(User.SteamId, g);
+              }
+              User.Dirty = true;
+            };
+            bw.RunWorkerAsync();
+          }
+        }, () => User != null);
+      }
+    }
+
+    /// <summary>
+    /// Updates the list owned games for the user and loads achievements and completion states for any new games.
+    /// </summary>
+    /// <returns></returns>
+    public ICommand UpdateGamesCommand
+    {
+      get
+      {
+        return new RelayCommand(() =>
+        {
+          using (var bw = new BackgroundWorker())
+          {
+            bw.DoWork += (sender, args) =>
+            {
+              Status = "Updating list of owned games...";
+              IEnumerable<IGame> games = _facade.GetGamesOfUser(User.SteamId);
+              HashSet<uint> ownedIds = new HashSet<uint>();
+              foreach (uint appId in User.OwnedGames.Select(g => g.AppId))
+              {
+                ownedIds.Add(appId);
+              }
+              IList<IGame> newGames = games.Where(g => !ownedIds.Contains(g.AppId)).ToList();
+              if (newGames.Count == 0)
+              {
+                Status += string.Format("\r\nFound no new games", newGames.Count);
+                return;
+              }
+              Status += string.Format("\r\n\tFound {0} new games:", newGames.Count);
+              foreach (IGame newGame in newGames)
+              {
+                Status += string.Format("\r\n\t\t* {0} ({1})", newGame.Name, newGame.AppId);
+              }
+              int i = 1;
+              int newGamesCount = newGames.Count;
+              foreach (var game in newGames)
+              {
+                Status += string.Format("\r\n\rLoading achievements for {0} ({1}/{2})...", game.Name, i, newGamesCount);
+                game.Achievements = _facade.GetAchievements(game.AppId);
+                Status += string.Format("\r\n\t\tFound {0} achievements", game.Achievements.Count());
+                i++;
+                if (game.Achievements.Any())
+                {
+                  Status += "\r\n\t\tLoading completion states...";
+                  _facade.GetAchievementCompletionStates(User.SteamId, game);
+                }
+              }
+              User.OwnedGames = User.OwnedGames.Union(newGames);
+              Status += "\r\nDone!";
+            };
+            bw.RunWorkerAsync();
+          }
+        }, () => User != null);
+      }
     }
   }
 }
