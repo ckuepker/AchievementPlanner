@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace de.inc47.AchievementPlanner.Model
+﻿namespace de.inc47.AchievementPlanner.Model
 {
   public class Achievement : ModelElement, IAchievement
   {
@@ -48,6 +46,24 @@ namespace de.inc47.AchievementPlanner.Model
           OnPropertyChanged();
         }
       }
+    }
+
+    public override bool Equals(object obj)
+    {
+      if (obj == null || !(obj is IAchievement))
+      {
+        return false;
+      }
+      IAchievement other = obj as IAchievement;
+      return Name == other.Name 
+        && Description == other.Description 
+        && Unlockable == other.Unlockable 
+        && IconUrl == other.IconUrl;
+    }
+
+    public override int GetHashCode()
+    {
+      return string.Format("{0}{1}{2}", Name, Description, IconUrl).GetHashCode();
     }
   }
 }

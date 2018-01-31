@@ -218,5 +218,48 @@ namespace de.inc47.AchievementPlanner.ViewModel
         }, () => User != null);
       }
     }
+
+    public ICommand UpdateAchievementsCommand
+    {
+      get
+      {
+        return new RelayCommand(() =>
+        {
+          using (var bw = new BackgroundWorker())
+          {
+            bw.DoWork += (sender, args) =>
+            {
+              Status = "Updating available achievements for all games...";
+              int i = 1;
+              int gameCount = User.OwnedGames.Count();
+              bool changed = false;
+              foreach (IGame g in User.OwnedGames)
+              {
+                Status += string.Format("\r\n\tLoading Achievements for {0} ({1}/{2})...", g.Name, i, gameCount);
+                HashSet<IAchievement> achievements = _facade.GetAchievements(g.AppId);
+                if (achievements.Any())
+                {
+                  var knownAchievements = g.Achievements.ToList();
+                  achievements.ExceptWith(knownAchievements);
+                  if (achievements.Any())
+                  {
+                    Status += string.Format("\r\n\t\t{0} new achievements found, consider updating completion status!", achievements.Count);
+                    g.Achievements = knownAchievements.Union(achievements);
+                    _facade.GetAchievementCompletionStates(User.SteamId, g);
+                    changed = true;
+                  }
+                }
+                i++;
+              }
+              if (changed)
+              {
+                User.Dirty = true;
+              }
+            };
+            bw.RunWorkerAsync();
+          }
+        }, () => User != null);
+      }
+    }
   }
 }

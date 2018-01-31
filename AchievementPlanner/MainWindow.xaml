@@ -109,6 +109,12 @@
           <TextBlock Text="Update Games" />
         </StackPanel>
       </Button>
+      <Button Name="UpdateAchievementsButton" Command="{Binding UpdateAchievementsCommand}">
+        <StackPanel Orientation="Horizontal">
+          <Image Source="Assets/Icons/.jpg" Width="32" Height="32"/>
+          <TextBlock Text="Check for new Achievements" />
+        </StackPanel>
+      </Button>
       <Button Name="UpdateCompletionButton" Command="{Binding UpdateCompletionStatesCommand}">
         <StackPanel Orientation="Horizontal">
           <Image Source="Assets/Icons/.jpg" Width="32" Height="32"/>
