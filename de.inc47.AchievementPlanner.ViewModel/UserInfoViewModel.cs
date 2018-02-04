@@ -24,7 +24,8 @@ namespace de.inc47.AchievementPlanner.ViewModel
           "PossibleAchievementCount",
           "PossibleAchievementOfPlayedGamesCount",
           "PossibleAchievementOfAchievedGamesCount",
-          "AchievedAchievementCount"
+          "AchievedAchievementCount",
+          "AverageGameCompletionRate"
         }
       },
     };
@@ -74,7 +75,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
 
     public int CompleteGamesCount
     {
-      get { return _user.OwnedGames.Count(g => g.Achievements.All(a => a.Completed)); }
+      get { return _user.OwnedGames.Count(g => g.Achievements.Any() && g.Achievements.All(a => a.Completed)); }
     }
 
     public int PossibleAchievementCount
@@ -99,5 +100,19 @@ namespace de.inc47.AchievementPlanner.ViewModel
 
     public string Name { get; set; }
     public string Avatar { get; set; }
+
+    public double AverageGameCompletionRate {
+      get
+      {
+        //double z = (double) AchievedAchievementCount; // 1773
+        //double n = (double) PossibleAchievementOfAchievedGamesCount;
+
+        // Indeed steam does an average of completion rates instead of calculating the ratio of achieved/achievable achievements
+        double n = (double) GamesWithAchievedAchievementsCount;
+        double z = (double) _user.OwnedGames.Where(g => g.CompletedAchievementCount > 0).Sum(g => g.CompletionRate);
+        double r = z / n;
+        return r;
+      }
+    }
   }
 }

@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AchievementTest.cs" />
+    <Compile Include="Builder\GameBuilder.cs" />
+    <Compile Include="Builder\UserBuilder.cs" />
     <Compile Include="Extension\NotifyPropertyChanged.cs" />
     <Compile Include="GameTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

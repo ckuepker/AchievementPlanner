@@ -119,7 +119,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
             i++;
           }
           User = new User(numericValue, userInfo.Item1, userInfo.Item2) { OwnedGames = games };
-          Games = gamesWithAchievements.Where(g => g.CompletedAchievementCount > 0);
+          Games = gamesWithAchievements.Where(g => g.CompletedAchievementCount > 0).OrderBy(g => g.CompletionRate);
           Initialized = true;
           OnPropertyChanged("Initialized");
           OnPropertyChanged("User");

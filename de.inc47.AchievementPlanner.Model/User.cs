@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace de.inc47.AchievementPlanner.Model
 {
@@ -30,10 +33,38 @@ namespace de.inc47.AchievementPlanner.Model
       get { return _ownedGames; }
       set
       {
+        if (_ownedGames != null && _ownedGames.Any())
+        {
+          foreach (IGame game in _ownedGames)
+          {
+            PropertyChangedEventManager.RemoveListener(game, this, string.Empty);
+          }
+        }
         _ownedGames = value;
+        if (_ownedGames != null && _ownedGames.Any())
+        {
+          foreach (IGame game in _ownedGames)
+          {
+            PropertyChangedEventManager.AddListener(game, this, string.Empty);
+          }
+        }
         Dirty = true;
         OnPropertyChanged("OwnedGames");
       }
+    }
+
+    public override bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+    {
+      var pcea = e as PropertyChangedEventArgs;
+      if (pcea != null)
+      {
+        string propertyName = pcea.PropertyName;
+        if (propertyName == "CompletionRate")
+        {
+          OnPropertyChanged("OwnedGames");
+        }
+      }
+      return base.ReceiveWeakEvent(managerType, sender, e);
     }
   }
 }

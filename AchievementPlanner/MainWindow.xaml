@@ -42,6 +42,7 @@
           <ColumnDefinition Width="120" />
           <ColumnDefinition Width="120" />
           <ColumnDefinition Width="120" />
+          <ColumnDefinition Width="80" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
           <Image Width="64" Height="64" Source="{Binding Avatar}" />
@@ -86,6 +87,8 @@
                    Grid.Row="3" Grid.Column="4"/>
         <TextBlock Text="{Binding AchievedAchievementCount}" Style="{StaticResource UserBaseTextBlockStyle}" 
                    Grid.Row="4" Grid.Column="4"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="5" Grid.RowSpan="4" Text="{Binding AverageGameCompletionRate, StringFormat=P2}" FontSize="32" />
       </Grid>
     </DataTemplate>
   </Window.Resources>

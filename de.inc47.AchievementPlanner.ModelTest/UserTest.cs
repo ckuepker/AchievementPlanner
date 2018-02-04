@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using de.inc47.AchievementPlanner.Model;
+using de.inc47.AchievementPlanner.ModelTest.Builder;
 using de.inc47.AchievementPlanner.ModelTest.Extension;
 using Moq;
 using NUnit.Framework;
@@ -45,6 +47,16 @@ namespace de.inc47.AchievementPlanner.ModelTest
       Assert.False(sut.Dirty);
       sut.ShouldNotifyOn(u => u.Dirty).When(u => u.OwnedGames = new List<IGame>());
       Assert.True(sut.Dirty);
+    }
+
+    [Test]
+    public void TestNotifiesOnAchievementChange()
+    {
+      var sut = new User(0, "", "");
+      var game = new GameBuilder().WithAchievements(5, 0).Build();
+      sut.OwnedGames = new List<IGame> { game };
+
+      sut.ShouldNotifyOn(u => u.OwnedGames).When(u => game.Achievements.Last().Completed = true);
     }
   }
 }
