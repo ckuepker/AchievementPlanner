@@ -31,8 +31,8 @@ namespace de.inc47.AchievementPlanner.ViewModelTest
     [Test]
     public void TestAverageGameCompletionRate()
     {
-      var g1 = new GameBuilder().WithAchievements(5,2).Build();
-      var g2 = new GameBuilder().WithAchievements(5, 5).Build();
+      var g1 = new GameBuilder().WithAchievements(5, 2).Build();
+      var g2 = new GameBuilder().WithAchievements(10, 10).Build();
       var u = new UserBuilder().WithGames(new List<IGame> {g1, g2}).Build();
       var sut = new UserInfoViewModel(u);
 
@@ -40,6 +40,20 @@ namespace de.inc47.AchievementPlanner.ViewModelTest
 
       sut.ShouldNotifyOn(vm => vm.AverageGameCompletionRate).When(vm => g1.Achievements.Last().Completed = true);
       Assert.AreEqual(0.8, sut.AverageGameCompletionRate);
+    }
+
+    [Test]
+    public void TestOverallCompletionRate()
+    {
+      var g1 = new GameBuilder().WithAchievements(5, 2).Build();
+      var g2 = new GameBuilder().WithAchievements(10, 10).Build();
+      var u = new UserBuilder().WithGames(new List<IGame> { g1, g2 }).Build();
+      var sut = new UserInfoViewModel(u);
+
+      Assert.AreEqual(0.8, sut.OverallCompletionRate, 0d);
+
+      sut.ShouldNotifyOn(vm => vm.OverallCompletionRate).When(vm => g1.Achievements.Last().Completed = true);
+      Assert.AreEqual(0.86, sut.OverallCompletionRate, 0.01d);
     }
   }
 }

@@ -14,7 +14,8 @@ namespace de.inc47.AchievementPlanner.ViewModel
 
     private Dictionary<string, HashSet<string>> _propertyMap = new Dictionary<string, HashSet<string>>
     {
-      { "OwnedGames", new HashSet<string>
+      {
+        "OwnedGames", new HashSet<string>
         {
           "GameCount",
           "GamesWithAchievementsCount",
@@ -25,7 +26,8 @@ namespace de.inc47.AchievementPlanner.ViewModel
           "PossibleAchievementOfPlayedGamesCount",
           "PossibleAchievementOfAchievedGamesCount",
           "AchievedAchievementCount",
-          "AverageGameCompletionRate"
+          "AverageGameCompletionRate",
+          "OverallCompletionRate"
         }
       },
     };
@@ -66,8 +68,9 @@ namespace de.inc47.AchievementPlanner.ViewModel
 
     public int GamesWithAchievedAchievementsCount
     {
-      get { return _user.OwnedGames.Count(g => g.Achievements.Any(a => a.Completed)); } 
+      get { return _user.OwnedGames.Count(g => g.Achievements.Any(a => a.Completed)); }
     }
+
     public int PlayedGamesWithAchievementsCount
     {
       get { return _user.OwnedGames.Count(g => g.Playtime > TimeSpan.Zero && g.Achievements.Any()); }
@@ -101,7 +104,8 @@ namespace de.inc47.AchievementPlanner.ViewModel
     public string Name { get; set; }
     public string Avatar { get; set; }
 
-    public double AverageGameCompletionRate {
+    public double AverageGameCompletionRate
+    {
       get
       {
         //double z = (double) AchievedAchievementCount; // 1773
@@ -110,6 +114,17 @@ namespace de.inc47.AchievementPlanner.ViewModel
         // Indeed steam does an average of completion rates instead of calculating the ratio of achieved/achievable achievements
         double n = (double) GamesWithAchievedAchievementsCount;
         double z = (double) _user.OwnedGames.Where(g => g.CompletedAchievementCount > 0).Sum(g => g.CompletionRate);
+        double r = z / n;
+        return r;
+      }
+    }
+
+    public double OverallCompletionRate
+    {
+      get
+      {
+        double z = (double)AchievedAchievementCount; // 1773
+        double n = (double)PossibleAchievementOfAchievedGamesCount;
         double r = z / n;
         return r;
       }
