@@ -93,6 +93,12 @@
         <TextBlock Grid.Row="3" Grid.Column="5" Grid.RowSpan="2" Text="{Binding OverallCompletionRate, StringFormat=P2}" FontSize="28" ToolTip="Ratio of achieved over achievable achievements (for played games with at least one unlocked achievement)" />
       </Grid>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModel:GamesViewModel}">
+      <ListView Height="450" ItemsSource="{Binding Games}" />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModel:AchievementsViewModel}">
+      <ListView Height="450" ItemsSource="{Binding Achievements}" />
+    </DataTemplate>
   </Window.Resources>
 
   <Grid>
@@ -134,7 +140,18 @@
     </StackPanel>
     <StackPanel Grid.Row="1" Orientation="Vertical" Visibility="{Binding Initialized, Converter={StaticResource BooleanToVisibilityConverter}}">
       <ContentPresenter Content="{Binding UserInfo}" />
-      <ListView Height="450" ItemsSource="{Binding Games}" />
+      <TabControl ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
+        <TabControl.ItemTemplate>
+          <DataTemplate DataType="{x:Type viewModel:ITabViewModel}">
+            <TextBlock Text="{Binding Header}" />
+          </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+          <DataTemplate DataType="{x:Type viewModel:ITabViewModel}">
+            <ContentPresenter Content="{Binding Content}" />
+          </DataTemplate>
+        </TabControl.ContentTemplate>
+      </TabControl>
     </StackPanel>
     <TextBox Grid.Row="2" IsEnabled="False" Name="LogTextBox" Height="200" Width="800" VerticalScrollBarVisibility="Visible" Text="{Binding Status}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
   </Grid>

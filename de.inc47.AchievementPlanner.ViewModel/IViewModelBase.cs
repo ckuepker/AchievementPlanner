@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace de.inc47.AchievementPlanner.ViewModel
 {
-  interface IViewModelBase : INotifyPropertyChanged
+  public interface IViewModelBase : INotifyPropertyChanged
   {
   }
 

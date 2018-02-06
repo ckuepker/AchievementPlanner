@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -12,26 +13,19 @@ namespace de.inc47.AchievementPlanner.ViewModel
 {
   public class MainWindowViewModel : ViewModelBase
   {
-    ISteamFacade _facade = new SteamFacade();
+    private ISteamFacade _facade = new SteamFacade();
     private string _steamId;
-    private IEnumerable<IGame> _games = new List<IGame>();
     private string _status;
-    private IStore _store;
+    private readonly IStore _store;
     private IUser _user;
+    private IGamesViewModel _gamesViewModel;
+    private IAchievementsViewModel _achievementsViewModel;
+    private ITabViewModel _selectedTab;
 
     public MainWindowViewModel()
     {
       _store = new Store(Configuration.Configuration.StoreLocation);
       User = _store.Load();
-      if (User != null)
-      {
-        Initialized = true;
-        Games = User.OwnedGames.Where(g => g.CompletedAchievementCount > 0).OrderBy(g => g.CompletionRate);
-      }
-      else
-      {
-        Initialized = false;
-      }
     }
 
     /// <summary>
@@ -48,8 +42,28 @@ namespace de.inc47.AchievementPlanner.ViewModel
         _user = value;
         if (_user != null)
         {
+          Initialized = true;
           UserInfo = new UserInfoViewModel(_user);
+          _gamesViewModel = new GamesViewModel(User.OwnedGames);
+          _achievementsViewModel = new AchievementsViewModel(User.OwnedGames.Select(g => g.Achievements).SelectMany(a => a));
+          Tabs = new ObservableCollection<ITabViewModel>
+          {
+            new TabViewModel("Games", _gamesViewModel),
+            new TabViewModel("Achievements", _achievementsViewModel)
+          };
+          SelectedTab = Tabs[0];
           OnPropertyChanged(nameof(UserInfo));
+          OnPropertyChanged(nameof(Initialized));
+          OnPropertyChanged(nameof(Tabs));
+          OnPropertyChanged(nameof(SelectedTab));
+        }
+        else
+        {
+          Tabs.Clear();
+          Initialized = false;
+          SelectedTab = null;
+          OnPropertyChanged(nameof(Initialized));
+          OnPropertyChanged(nameof(Tabs));
         }
       }
     }
@@ -62,12 +76,6 @@ namespace de.inc47.AchievementPlanner.ViewModel
       set { _steamId = value; }
     }
 
-    public IEnumerable<IGame> Games
-    {
-      get { return _games; }
-      set { _games = value; }
-    }
-
     public string Status
     {
       get { return _status; }
@@ -75,6 +83,22 @@ namespace de.inc47.AchievementPlanner.ViewModel
       {
         _status = value;
         OnPropertyChanged("Status");
+      }
+    }
+
+    public ObservableCollection<ITabViewModel> Tabs
+    {
+      get;
+      private set;
+    }
+
+    private ITabViewModel SelectedTab
+    {
+      get { return _selectedTab; }
+      set
+      {
+        _selectedTab = value;
+        OnPropertyChanged(nameof(SelectedTab));
       }
     }
 
@@ -119,11 +143,6 @@ namespace de.inc47.AchievementPlanner.ViewModel
             i++;
           }
           User = new User(numericValue, userInfo.Item1, userInfo.Item2) { OwnedGames = games };
-          Games = gamesWithAchievements.Where(g => g.CompletedAchievementCount > 0).OrderBy(g => g.CompletionRate);
-          Initialized = true;
-          OnPropertyChanged("Initialized");
-          OnPropertyChanged("User");
-          OnPropertyChanged("Games");
           File.WriteAllText("E:\\data\\dev\\net\\achievement_planner_import.log", Status);
         };
         bw.RunWorkerAsync();
