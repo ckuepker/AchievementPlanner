@@ -92,7 +92,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
       private set;
     }
 
-    private ITabViewModel SelectedTab
+    public ITabViewModel SelectedTab
     {
       get { return _selectedTab; }
       set
