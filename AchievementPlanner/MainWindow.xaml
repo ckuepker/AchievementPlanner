@@ -8,7 +8,8 @@
 
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
-    <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+    <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+    <converter:CompletionStateToOpacityConverter x:Key="CompletionStateToOpacityConverter" />
     <DataTemplate DataType="{x:Type model:Game}">
       <StackPanel Orientation="Horizontal">
         <Image Source="{Binding IconUrl}" Height="32" Width="32" />
@@ -16,6 +17,15 @@
         <StackPanel Orientation="Vertical">
           <TextBlock Text="{Binding CompletionRate, StringFormat=P2}" />
           <TextBlock Text="{Binding AchievementCount}"></TextBlock>
+        </StackPanel>
+      </StackPanel>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type model:Achievement}">
+      <StackPanel Orientation="Horizontal" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}">
+        <Image Source="{Binding IconUrl}" Height="32" Width="32" />
+        <TextBlock Text="{Binding Name}" Width="600" />
+        <StackPanel Orientation="Vertical">
+          <TextBlock Text="{Binding GlobalCompletionPercentage}" />
         </StackPanel>
       </StackPanel>
     </DataTemplate>

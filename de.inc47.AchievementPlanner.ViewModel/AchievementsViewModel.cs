@@ -11,7 +11,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
 
     public AchievementsViewModel(IEnumerable<IAchievement> achievements)
     {
-      _achievements = new ObservableCollection<IAchievement>(achievements.OrderBy(a => a.Name));
+      _achievements = new ObservableCollection<IAchievement>(achievements.OrderBy(a => a.GlobalCompletionPercentage));
     }
 
     public ObservableCollection<IAchievement> Achievements
