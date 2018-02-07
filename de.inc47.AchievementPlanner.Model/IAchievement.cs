@@ -2,6 +2,7 @@
 {
   public interface IAchievement : IModelElement
   {
+    string InternalShortName { get; }
     string Name { get; }
     string Description { get; }
     string IconUrl { get; }

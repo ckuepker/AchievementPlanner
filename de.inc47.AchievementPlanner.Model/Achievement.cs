@@ -1,19 +1,23 @@
-﻿namespace de.inc47.AchievementPlanner.Model
+﻿using System;
+
+namespace de.inc47.AchievementPlanner.Model
 {
   public class Achievement : ModelElement, IAchievement
   {
     private bool _completed;
     private double _globalCompletionPercentage;
 
-    public Achievement(string name, string description, string iconUrl)
+    public Achievement(string name, string description, string iconUrl, string internalShortName = "")
     {
       Name = name;
       Description = description;
       IconUrl = iconUrl;
       Completed = false;
       Unlockable = true;
+      InternalShortName = internalShortName;
     }
 
+    public string InternalShortName { get; }
     public string Name { get; }
     public string Description { get; }
     public string IconUrl { get; }
@@ -39,7 +43,7 @@
       get { return _globalCompletionPercentage; }
       set
       {
-        if (value != _globalCompletionPercentage)
+        if (value - _globalCompletionPercentage > Double.Epsilon)
         {
           _globalCompletionPercentage = value;
           Dirty = true;
@@ -55,7 +59,8 @@
         return false;
       }
       IAchievement other = obj as IAchievement;
-      return Name == other.Name 
+      return InternalShortName == other.InternalShortName
+        && Name == other.Name 
         && Description == other.Description 
         && Unlockable == other.Unlockable 
         && IconUrl == other.IconUrl;

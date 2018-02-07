@@ -44,6 +44,8 @@ namespace SteamWebAPITest
       HashSet<IAchievement> achievements = _sut.GetAchievements((uint)appId);
       Assert.AreEqual(expectedCount, achievements.Count);
       Assert.AreEqual(1, achievements.Count(a => a.Name == exemplaryAchievementName));
+      Assert.True(achievements.All(a => a.GlobalCompletionPercentage > 0d));
+      Assert.True(achievements.All(a => a.GlobalCompletionPercentage <= 100d));
     }
 
     [Test]

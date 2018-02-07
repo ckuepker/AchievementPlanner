@@ -5,6 +5,7 @@ using de.inc47.AchievementPlanner.Configuration;
 using de.inc47.AchievementPlanner.Model;
 using Steam.Models;
 using Steam.Models.SteamCommunity;
+using Steam.Models.SteamPlayer;
 using SteamWebAPI2.Interfaces;
 
 namespace de.inc47.SteamWebAPI
@@ -20,10 +21,9 @@ namespace de.inc47.SteamWebAPI
     public HashSet<IAchievement> GetAchievements(uint appId)
     {
       var i = new SteamUserStats(_apiKey);
-      //var task = i.GetGlobalAchievementPercentagesForAppAsync(appId);
-      var task = i.GetSchemaForGameAsync(appId);
+      var achievementsTask = i.GetSchemaForGameAsync(appId);
       HashSet<IAchievement> achievements = new HashSet<IAchievement>();
-      var response = task.Result.Data;
+      var response = achievementsTask.Result.Data;
       if (response.AvailableGameStats == null || response.AvailableGameStats.Achievements == null)
       {
         return new HashSet<IAchievement>();
@@ -31,8 +31,17 @@ namespace de.inc47.SteamWebAPI
       IReadOnlyCollection<SchemaGameAchievementModel> resultList = response.AvailableGameStats.Achievements;
       foreach (SchemaGameAchievementModel a in resultList)
       {
-        IAchievement ach = new Achievement(a.DisplayName, a.Description, a.Icon);
+        IAchievement ach = new Achievement(a.DisplayName, a.Description, a.Icon, a.Name);
         achievements.Add(ach);
+      }
+      var globalPercentageTask = i.GetGlobalAchievementPercentagesForAppAsync(appId);
+      foreach (GlobalAchievementPercentageModel globalAchievementPercentageModel in globalPercentageTask.Result.Data)
+      {
+        IAchievement achievement = achievements.FirstOrDefault(a => a.InternalShortName == globalAchievementPercentageModel.Name);
+        if (achievement != null)
+        {
+          achievement.GlobalCompletionPercentage = globalAchievementPercentageModel.Percent;
+        }
       }
       return achievements;
     }
@@ -60,7 +69,7 @@ namespace de.inc47.SteamWebAPI
       var i = new SteamUserStats(_apiKey);
       var t = i.GetPlayerAchievementsAsync(game.AppId, steamId);
       var result = t.Result.Data;
-      foreach (var playerAchievementModel in result.Achievements.Where(a => a.Achieved == 1))
+      foreach (PlayerAchievementModel playerAchievementModel in result.Achievements.Where(a => a.Achieved == 1))
       {
         var a = game.Achievements.First(ach => ach.Name == playerAchievementModel.Name);
         a.Completed = true;

@@ -25,7 +25,7 @@
         <Image Source="{Binding IconUrl}" Height="32" Width="32" />
         <TextBlock Text="{Binding Name}" Width="600" />
         <StackPanel Orientation="Vertical">
-          <TextBlock Text="{Binding GlobalCompletionPercentage}" />
+          <TextBlock Text="{Binding GlobalCompletionPercentage, StringFormat={}{0:0.000}%}" />
         </StackPanel>
       </StackPanel>
     </DataTemplate>
