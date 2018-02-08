@@ -56,9 +56,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AchievementsViewModel.cs" />
+    <Compile Include="AchievementListViewModel.cs" />
+    <Compile Include="AchievementViewModel.cs" />
     <Compile Include="GamesViewModel.cs" />
-    <Compile Include="IAchievementsViewModel.cs" />
+    <Compile Include="IAchievementsListViewModel.cs" />
+    <Compile Include="IAchievementViewModel.cs" />
     <Compile Include="IGamesViewModel.cs" />
     <Compile Include="IViewModelBase.cs" />
     <Compile Include="MainWindowViewModel.cs" />

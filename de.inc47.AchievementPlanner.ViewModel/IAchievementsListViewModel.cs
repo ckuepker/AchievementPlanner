@@ -3,8 +3,8 @@ using de.inc47.AchievementPlanner.Model;
 
 namespace de.inc47.AchievementPlanner.ViewModel
 {
-  public interface IAchievementsViewModel : IViewModelBase
+  public interface IAchievementsListViewModel : IViewModelBase
   {
-    ObservableCollection<IAchievement> Achievements { get; }
+    ObservableCollection<IAchievementViewModel> Achievements { get; }
   }
 }

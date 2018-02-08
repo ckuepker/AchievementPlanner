@@ -19,7 +19,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
     private readonly IStore _store;
     private IUser _user;
     private IGamesViewModel _gamesViewModel;
-    private IAchievementsViewModel _achievementsViewModel;
+    private IAchievementsListViewModel _achievementsListViewModel;
     private ITabViewModel _selectedTab;
 
     public MainWindowViewModel()
@@ -45,11 +45,11 @@ namespace de.inc47.AchievementPlanner.ViewModel
           Initialized = true;
           UserInfo = new UserInfoViewModel(_user);
           _gamesViewModel = new GamesViewModel(User.OwnedGames);
-          _achievementsViewModel = new AchievementsViewModel(User.OwnedGames.Where(g => g.CompletedAchievementCount > 0).Select(g => g.Achievements).SelectMany(a => a));
+          _achievementsListViewModel = new AchievementListViewModel(User.OwnedGames.Where(g => g.CompletedAchievementCount > 0).Select(g => g.Achievements).SelectMany(a => a), GetGameFromAchievement);
           Tabs = new ObservableCollection<ITabViewModel>
           {
             new TabViewModel("Games", _gamesViewModel),
-            new TabViewModel("Achievements", _achievementsViewModel)
+            new TabViewModel("Achievements", _achievementsListViewModel)
           };
           SelectedTab = Tabs[0];
           OnPropertyChanged(nameof(UserInfo));
@@ -100,6 +100,12 @@ namespace de.inc47.AchievementPlanner.ViewModel
         _selectedTab = value;
         OnPropertyChanged(nameof(SelectedTab));
       }
+    }
+
+    private IGame GetGameFromAchievement(IAchievement achievement)
+    {
+      // TODO Optimize by utilizing IDs or Dictionaries
+      return User.OwnedGames.Where(g => g.AchievementCount > 0).FirstOrDefault(g => g.Achievements.Contains(achievement));
     }
 
     public void LoadFromApi()

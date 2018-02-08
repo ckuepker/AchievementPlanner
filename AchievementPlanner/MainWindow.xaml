@@ -20,11 +20,17 @@
         </StackPanel>
       </StackPanel>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type model:Achievement}">
-      <StackPanel Orientation="Horizontal" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}">
-        <Image Source="{Binding IconUrl}" Height="32" Width="32" />
-        <TextBlock Text="{Binding Name}" Width="600" />
-        <StackPanel Orientation="Vertical">
+    <DataTemplate DataType="{x:Type viewModel:AchievementViewModel}">
+      <StackPanel Orientation="Horizontal">
+        <Grid>
+          <Image Source="{Binding IconUrl}" Height="32" Width="32" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}" />
+          <Image Source="{Binding GameIconUrl}" Height="16" Width="16" Margin="24 24 0 0" />
+        </Grid>
+        <StackPanel Orientation="Vertical" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}">
+          <TextBlock Text="{Binding Name}" Width="600" FontWeight="Bold" />
+          <TextBlock Text="{Binding Description}" Width="600"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}">
           <TextBlock Text="{Binding GlobalCompletionPercentage, StringFormat={}{0:0.000}%}" />
         </StackPanel>
       </StackPanel>
@@ -106,7 +112,7 @@
     <DataTemplate DataType="{x:Type viewModel:GamesViewModel}">
       <ListView Height="450" ItemsSource="{Binding Games}" />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type viewModel:AchievementsViewModel}">
+    <DataTemplate DataType="{x:Type viewModel:AchievementListViewModel}">
       <ListView Height="450" ItemsSource="{Binding Achievements}" />
     </DataTemplate>
   </Window.Resources>

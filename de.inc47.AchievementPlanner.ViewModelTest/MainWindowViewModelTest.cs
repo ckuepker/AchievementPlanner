@@ -21,7 +21,7 @@ namespace de.inc47.AchievementPlanner.ViewModelTest
       Assert.NotNull(sut.Tabs);
       Assert.AreEqual(2, sut.Tabs.Count);
       Assert.True(sut.Tabs.Count(t => t.Header == "Games" && t.Content is IGamesViewModel) == 1);
-      Assert.True(sut.Tabs.Count(t => t.Header == "Achievements" && t.Content is IAchievementsViewModel) == 1);
+      Assert.True(sut.Tabs.Count(t => t.Header == "Achievements" && t.Content is IAchievementsListViewModel) == 1);
     }
   }
 }
