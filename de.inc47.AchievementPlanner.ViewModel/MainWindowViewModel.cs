@@ -45,7 +45,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
           Initialized = true;
           UserInfo = new UserInfoViewModel(_user);
           _gamesViewModel = new GamesViewModel(User.OwnedGames);
-          _achievementsListViewModel = new AchievementListViewModel(User.OwnedGames.Where(g => g.CompletedAchievementCount > 0).Select(g => g.Achievements).SelectMany(a => a), GetGameFromAchievement);
+          _achievementsListViewModel = new AchievementListViewModel(User.OwnedGames.Where(g => g.CompletedAchievementCount > 0).Select(g => g.Achievements).SelectMany(a => a), GetGameFromAchievement, () => UserInfo);
           Tabs = new ObservableCollection<ITabViewModel>
           {
             new TabViewModel("Games", _gamesViewModel),

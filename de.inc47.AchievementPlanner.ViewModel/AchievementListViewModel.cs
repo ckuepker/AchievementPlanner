@@ -10,9 +10,9 @@ namespace de.inc47.AchievementPlanner.ViewModel
   {
     private readonly ObservableCollection<IAchievementViewModel> _achievements;
 
-    public AchievementListViewModel(IEnumerable<IAchievement> achievements, Func<IAchievement,IGame> getGame)
+    public AchievementListViewModel(IEnumerable<IAchievement> achievements, Func<IAchievement,IGame> getGame, Func<UserInfoViewModel> getUserInfo)
     {
-      _achievements = new ObservableCollection<IAchievementViewModel>(achievements.OrderBy(a => a.GlobalCompletionPercentage).Select(a => new AchievementViewModel(a, getGame)));
+      _achievements = new ObservableCollection<IAchievementViewModel>(achievements.Select(a => new AchievementViewModel(a, getGame, getUserInfo)).OrderBy(a => a.AverageCompletionRateIncrement).Reverse());
     }
 
     public ObservableCollection<IAchievementViewModel> Achievements

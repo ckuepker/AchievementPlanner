@@ -7,11 +7,13 @@ namespace de.inc47.AchievementPlanner.ViewModel
   {
     private readonly IGame _game;
     private readonly IAchievement _achievement;
+    private readonly Func<UserInfoViewModel> _getUserInfo;
 
-    public AchievementViewModel(IAchievement achievement, Func<IAchievement,IGame> getGame)
+    public AchievementViewModel(IAchievement achievement, Func<IAchievement,IGame> getGame, Func<UserInfoViewModel> getUserInfo)
     {
       _achievement = achievement;
       _game = getGame(_achievement);
+      _getUserInfo = getUserInfo;
       IconUrl = _achievement.IconUrl;
       Name = _achievement.Name;
       Description = _achievement.Description;
@@ -26,5 +28,15 @@ namespace de.inc47.AchievementPlanner.ViewModel
     public bool Completed { get; }
     public string GameIconUrl { get; }
     public double GlobalCompletionPercentage { get; }
+
+    public double CompletionRateIncrement
+    {
+      get { return Completed ? 0d : 1d / (double) _game.AchievementCount; }
+    }
+
+    public double AverageCompletionRateIncrement
+    {
+      get { return CompletionRateIncrement / (double) _getUserInfo().GamesWithAchievedAchievementsCount; }
+    }
   }
 }

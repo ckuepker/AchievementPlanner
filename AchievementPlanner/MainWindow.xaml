@@ -30,8 +30,10 @@
           <TextBlock Text="{Binding Name}" Width="600" FontWeight="Bold" />
           <TextBlock Text="{Binding Description}" Width="600"></TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}">
-          <TextBlock Text="{Binding GlobalCompletionPercentage, StringFormat={}{0:0.000}%}" />
+        <StackPanel Orientation="Vertical">
+          <TextBlock Text="{Binding GlobalCompletionPercentage, StringFormat={}{0:0.000}%}" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}" />
+          <TextBlock Text="{Binding CompletionRateIncrement, StringFormat={}+{0:P2}}" Visibility="{Binding Completed, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+          <TextBlock Text="{Binding AverageCompletionRateIncrement, StringFormat={}+{0:P3}}" Visibility="{Binding Completed, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
         </StackPanel>
       </StackPanel>
     </DataTemplate>

@@ -8,5 +8,7 @@
     bool Completed { get; }
     string GameIconUrl { get; }
     double GlobalCompletionPercentage { get; }
+    double CompletionRateIncrement { get; }
+    double AverageCompletionRateIncrement { get; }
   }
 }
