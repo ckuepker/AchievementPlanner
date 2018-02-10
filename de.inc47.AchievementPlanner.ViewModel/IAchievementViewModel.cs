@@ -1,7 +1,10 @@
-﻿namespace de.inc47.AchievementPlanner.ViewModel
+﻿using de.inc47.AchievementPlanner.Model;
+
+namespace de.inc47.AchievementPlanner.ViewModel
 {
   public interface IAchievementViewModel : IViewModelBase
   {
+    IGame Game { get; }
     string IconUrl { get; }
     string Name { get; }
     string Description { get; }

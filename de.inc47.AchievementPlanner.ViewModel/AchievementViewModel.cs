@@ -5,23 +5,24 @@ namespace de.inc47.AchievementPlanner.ViewModel
 {
   public class AchievementViewModel : ViewModelBase, IAchievementViewModel
   {
-    private readonly IGame _game;
     private readonly IAchievement _achievement;
-    private readonly Func<UserInfoViewModel> _getUserInfo;
+    private readonly Func<IUserInfoViewModel> _getUserInfo;
 
-    public AchievementViewModel(IAchievement achievement, Func<IAchievement,IGame> getGame, Func<UserInfoViewModel> getUserInfo)
+    public AchievementViewModel(IAchievement achievement, Func<IAchievement,IGame> getGame, Func<IUserInfoViewModel> getUserInfo)
     {
       _achievement = achievement;
-      _game = getGame(_achievement);
+      Game = getGame(_achievement);
       _getUserInfo = getUserInfo;
       IconUrl = _achievement.IconUrl;
       Name = _achievement.Name;
       Description = _achievement.Description;
       Completed = _achievement.Completed;
-      GameIconUrl = _game != null ? _game.IconUrl : string.Empty;
+      GameIconUrl = Game != null ? Game.IconUrl : string.Empty;
       GlobalCompletionPercentage = achievement.GlobalCompletionPercentage;
+      Weight = (AverageCompletionRateIncrement * 100d + GlobalCompletionPercentage) / 2;
     }
 
+    public IGame Game { get; }
     public string IconUrl { get; }
     public string Name { get; }
     public string Description { get; }
@@ -31,7 +32,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
 
     public double CompletionRateIncrement
     {
-      get { return Completed ? 0d : 1d / (double) _game.AchievementCount; }
+      get { return Completed ? 0d : 1d / (double) Game.AchievementCount; }
     }
 
     public double AverageCompletionRateIncrement
@@ -39,9 +40,6 @@ namespace de.inc47.AchievementPlanner.ViewModel
       get { return CompletionRateIncrement / (double) _getUserInfo().GamesWithAchievedAchievementsCount; }
     }
 
-    public double Weight
-    {
-      get { return (AverageCompletionRateIncrement * 100d + GlobalCompletionPercentage) / 2; }
-    }
+    public double Weight { get; }
   }
 }

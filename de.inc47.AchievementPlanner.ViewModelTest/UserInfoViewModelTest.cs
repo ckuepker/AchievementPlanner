@@ -16,7 +16,7 @@ namespace de.inc47.AchievementPlanner.ViewModelTest
     public void TestNotifiesOnOwnedGamesChange()
     {
       var userMock = new Mock<IUser>();
-      var sut = new UserInfoViewModel(userMock.Object);
+      IUserInfoViewModel sut = new UserInfoViewModel(userMock.Object);
       sut.ShouldNotifyOn(vm => vm.GameCount).When(vm => userMock.Raise(u => u.PropertyChanged += null, new PropertyChangedEventArgs("OwnedGames")));
       sut.ShouldNotifyOn(vm => vm.GamesWithAchievementsCount).When(vm => userMock.Raise(u => u.PropertyChanged += null, new PropertyChangedEventArgs("OwnedGames")));
       sut.ShouldNotifyOn(vm => vm.GamesWithAchievedAchievementsCount).When(vm => userMock.Raise(u => u.PropertyChanged += null, new PropertyChangedEventArgs("OwnedGames")));
@@ -34,7 +34,7 @@ namespace de.inc47.AchievementPlanner.ViewModelTest
       var g1 = new GameBuilder().WithAchievements(5, 2).Build();
       var g2 = new GameBuilder().WithAchievements(10, 10).Build();
       var u = new UserBuilder().WithGames(new List<IGame> {g1, g2}).Build();
-      var sut = new UserInfoViewModel(u);
+      IUserInfoViewModel sut = new UserInfoViewModel(u);
 
       Assert.AreEqual(0.7, sut.AverageGameCompletionRate, 0d);
 
@@ -48,7 +48,7 @@ namespace de.inc47.AchievementPlanner.ViewModelTest
       var g1 = new GameBuilder().WithAchievements(5, 2).Build();
       var g2 = new GameBuilder().WithAchievements(10, 10).Build();
       var u = new UserBuilder().WithGames(new List<IGame> { g1, g2 }).Build();
-      var sut = new UserInfoViewModel(u);
+      IUserInfoViewModel sut = new UserInfoViewModel(u);
 
       Assert.AreEqual(0.8, sut.OverallCompletionRate, 0d);
 

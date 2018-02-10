@@ -8,7 +8,7 @@ using de.inc47.AchievementPlanner.Model;
 
 namespace de.inc47.AchievementPlanner.ViewModel
 {
-  public class UserInfoViewModel : ViewModelBase
+  public class UserInfoViewModel : ViewModelBase, IUserInfoViewModel
   {
     private readonly IUser _user;
 

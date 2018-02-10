@@ -116,7 +116,13 @@
       <ListView Height="450" ItemsSource="{Binding Games}" />
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewModel:AchievementListViewModel}">
-      <ListView Height="450" ItemsSource="{Binding Achievements}" />
+      <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+          <CheckBox IsChecked="{Binding IsShowCompleted}" ToolTip="Show achievements that are already completed">Show completed</CheckBox>
+          <CheckBox IsChecked="{Binding IsShowUnplayed}" ToolTip="Show achievements from games where noch achievements have been unlocked yet">Show unplayed</CheckBox>
+        </StackPanel>
+        <ListView Height="450" ItemsSource="{Binding Achievements}" />
+      </StackPanel>
     </DataTemplate>
   </Window.Resources>
 

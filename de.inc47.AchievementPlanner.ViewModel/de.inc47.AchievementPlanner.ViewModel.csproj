@@ -62,6 +62,7 @@
     <Compile Include="IAchievementsListViewModel.cs" />
     <Compile Include="IAchievementViewModel.cs" />
     <Compile Include="IGamesViewModel.cs" />
+    <Compile Include="IUserInfoViewModel.cs" />
     <Compile Include="IViewModelBase.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
