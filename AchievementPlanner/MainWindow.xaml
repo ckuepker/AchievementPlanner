@@ -24,7 +24,7 @@
       <StackPanel Orientation="Horizontal">
         <Grid>
           <Image Source="{Binding IconUrl}" Height="32" Width="32" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}" />
-          <Image Source="{Binding GameIconUrl}" Height="16" Width="16" Margin="24 24 0 0" />
+          <Image ToolTip="{Binding Path=Game.Name}" Source="{Binding GameIconUrl}" Height="16" Width="16" Margin="24 24 0 0" />
         </Grid>
         <StackPanel Orientation="Vertical" Opacity="{Binding Completed, Converter={StaticResource CompletionStateToOpacityConverter}}">
           <TextBlock Text="{Binding Name}" Width="600" FontWeight="Bold" />
