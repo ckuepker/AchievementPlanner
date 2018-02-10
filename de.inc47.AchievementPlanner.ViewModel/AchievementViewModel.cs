@@ -38,5 +38,10 @@ namespace de.inc47.AchievementPlanner.ViewModel
     {
       get { return CompletionRateIncrement / (double) _getUserInfo().GamesWithAchievedAchievementsCount; }
     }
+
+    public double Weight
+    {
+      get { return (AverageCompletionRateIncrement * 100d + GlobalCompletionPercentage) / 2; }
+    }
   }
 }

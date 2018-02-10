@@ -12,7 +12,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
 
     public AchievementListViewModel(IEnumerable<IAchievement> achievements, Func<IAchievement,IGame> getGame, Func<UserInfoViewModel> getUserInfo)
     {
-      _achievements = new ObservableCollection<IAchievementViewModel>(achievements.Select(a => new AchievementViewModel(a, getGame, getUserInfo)).OrderBy(a => a.AverageCompletionRateIncrement).Reverse());
+      _achievements = new ObservableCollection<IAchievementViewModel>(achievements.Select(a => new AchievementViewModel(a, getGame, getUserInfo)).OrderBy(a => a.Weight).Reverse());
     }
 
     public ObservableCollection<IAchievementViewModel> Achievements
