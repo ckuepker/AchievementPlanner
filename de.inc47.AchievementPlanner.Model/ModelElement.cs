@@ -17,6 +17,7 @@ namespace de.inc47.AchievementPlanner.Model
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    // TODO Get rid of Dirty
     public bool Dirty
     {
       get { return _dirty; }
