@@ -13,6 +13,5 @@ namespace de.inc47.AchievementPlanner.ViewModel
     double GlobalCompletionPercentage { get; }
     double CompletionRateIncrement { get; }
     double AverageCompletionRateIncrement { get; }
-    double Weight { get; }
   }
 }

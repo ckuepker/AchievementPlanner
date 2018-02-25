@@ -8,7 +8,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
     private readonly IAchievement _achievement;
     private readonly Func<IUserInfoViewModel> _getUserInfo;
 
-    public AchievementViewModel(IAchievement achievement, Func<IAchievement,IGame> getGame, Func<IUserInfoViewModel> getUserInfo)
+    public AchievementViewModel(IAchievement achievement, Func<IAchievement, IGame> getGame, Func<IUserInfoViewModel> getUserInfo)
     {
       _achievement = achievement;
       Game = getGame(_achievement);
@@ -19,7 +19,8 @@ namespace de.inc47.AchievementPlanner.ViewModel
       Completed = _achievement.Completed;
       GameIconUrl = Game != null ? Game.IconUrl : string.Empty;
       GlobalCompletionPercentage = achievement.GlobalCompletionPercentage;
-      Weight = (AverageCompletionRateIncrement * 100d + GlobalCompletionPercentage) / 2;
+      CompletionRateIncrement = Completed ? 0d : 1d / (double)Game.AchievementCount;
+      AverageCompletionRateIncrement = CompletionRateIncrement / (double)_getUserInfo().GamesWithAchievedAchievementsCount;
     }
 
     public IGame Game { get; }
@@ -29,17 +30,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
     public bool Completed { get; }
     public string GameIconUrl { get; }
     public double GlobalCompletionPercentage { get; }
-
-    public double CompletionRateIncrement
-    {
-      get { return Completed ? 0d : 1d / (double) Game.AchievementCount; }
-    }
-
-    public double AverageCompletionRateIncrement
-    {
-      get { return CompletionRateIncrement / (double) _getUserInfo().GamesWithAchievedAchievementsCount; }
-    }
-
-    public double Weight { get; }
+    public double CompletionRateIncrement { get; }
+    public double AverageCompletionRateIncrement { get; }
   }
 }

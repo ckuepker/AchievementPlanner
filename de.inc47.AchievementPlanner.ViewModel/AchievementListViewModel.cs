@@ -19,7 +19,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
       _isShowCompleted = true;
       _isShowUnplayed = false;
       _completeAchievementViewModels = new List<IAchievementViewModel>(achievements.Select(a => new AchievementViewModel(a, getGame, getUserInfo)));
-      _achievements = new ObservableCollection<IAchievementViewModel>(_completeAchievementViewModels.Where(a => a.Game.CompletedAchievementCount > 0).OrderBy(a => a.Weight).Reverse());
+      _achievements = new ObservableCollection<IAchievementViewModel>(_completeAchievementViewModels.Where(a => a.Game.CompletedAchievementCount > 0).OrderBy(a => a.AverageCompletionRateIncrement).Reverse());
     }
 
     public ObservableCollection<IAchievementViewModel> Achievements
@@ -41,7 +41,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
           {
             if (value)
             {
-              Achievements.Insert(FindInsertIndex(avm, Achievements, a => a.Weight), avm);
+              Achievements.Insert(FindInsertIndex(avm, Achievements, a => a.AverageCompletionRateIncrement), avm);
             }
             else
             {
@@ -65,7 +65,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
           {
             if (value)
             {
-              Achievements.Insert(FindInsertIndex(avm, Achievements, a => a.Weight), avm);
+              Achievements.Insert(FindInsertIndex(avm, Achievements, a => a.AverageCompletionRateIncrement), avm);
             }
             else
             {
