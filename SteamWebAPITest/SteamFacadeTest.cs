@@ -27,7 +27,7 @@ namespace SteamWebAPITest
     {
       IEnumerable<uint> games = _sut.GetGamesOfUser(_steamId).Select(g => g.AppId).ToList();
       CollectionAssert.IsNotEmpty(games);
-      Assert.AreEqual(133, games.Count());
+      Assert.AreEqual(134, games.Count());
       CollectionAssert.Contains(games, 730, "'CS GO' should be in games list");
       CollectionAssert.Contains(games, 245550, "'Free To Play' should be in games list");
       CollectionAssert.Contains(games, 221910, "'Stanley Parable' should be in games list");

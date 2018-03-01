@@ -20,7 +20,14 @@ namespace de.inc47.AchievementPlanner.ViewModel
       GameIconUrl = Game != null ? Game.IconUrl : string.Empty;
       GlobalCompletionPercentage = achievement.GlobalCompletionPercentage;
       CompletionRateIncrement = Completed ? 0d : 1d / (double)Game.AchievementCount;
-      AverageCompletionRateIncrement = CompletionRateIncrement / (double)_getUserInfo().GamesWithAchievedAchievementsCount;
+      if (Game.CompletedAchievementCount == 0)
+      {
+        AverageCompletionRateIncrement = -1;
+      }
+      else
+      {
+        AverageCompletionRateIncrement = CompletionRateIncrement / (double) _getUserInfo().GamesWithAchievedAchievementsCount;
+      }
     }
 
     public IGame Game { get; }
