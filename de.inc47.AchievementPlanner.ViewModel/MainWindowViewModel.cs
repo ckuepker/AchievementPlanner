@@ -59,7 +59,7 @@ namespace de.inc47.AchievementPlanner.ViewModel
         }
         else
         {
-          Tabs.Clear();
+          Tabs?.Clear();
           Initialized = false;
           SelectedTab = null;
           OnPropertyChanged(nameof(Initialized));
