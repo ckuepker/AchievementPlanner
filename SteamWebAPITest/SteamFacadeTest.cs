@@ -27,7 +27,7 @@ namespace SteamWebAPITest
     {
       IEnumerable<uint> games = _sut.GetGamesOfUser(_steamId).Select(g => g.AppId).ToList();
       CollectionAssert.IsNotEmpty(games);
-      Assert.AreEqual(134, games.Count());
+      Assert.AreEqual(142, games.Count());
       CollectionAssert.Contains(games, 730, "'CS GO' should be in games list");
       CollectionAssert.Contains(games, 245550, "'Free To Play' should be in games list");
       CollectionAssert.Contains(games, 221910, "'Stanley Parable' should be in games list");
@@ -44,8 +44,6 @@ namespace SteamWebAPITest
       HashSet<IAchievement> achievements = _sut.GetAchievements((uint)appId);
       Assert.AreEqual(expectedCount, achievements.Count);
       Assert.AreEqual(1, achievements.Count(a => a.Name == exemplaryAchievementName));
-      Assert.True(achievements.All(a => a.GlobalCompletionPercentage > 0d));
-      Assert.True(achievements.All(a => a.GlobalCompletionPercentage <= 100d));
     }
 
     [Test]
@@ -62,8 +60,8 @@ namespace SteamWebAPITest
       IGame se = new Game(_appid, "Space Engineers", "", TimeSpan.Zero);
       se.Achievements = _sut.GetAchievements(_appid);
       _sut.GetAchievementCompletionStates(_steamId, se);
-      Assert.False(se.Achievements.First(a => a.Name == "Master Engineer").Completed);
-      Assert.True(se.Achievements.Where(a => a.Name != "Master Engineer").All(a => a.Completed));
+      Assert.That(se.Achievements.First(a => a.Name == "Engineering Degree").Completed, Is.False);
+      Assert.That(se.Achievements.First(a => a.Name != "Master Engineer").Completed, Is.True);
     }
   }
 }
